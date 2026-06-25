@@ -2,6 +2,7 @@ import SwiftUI
 
 struct HomeView: View {
     @State private var viewModel = SummaryViewModel()
+    @State private var showUserPicker = false
 
     var body: some View {
         NavigationStack {
@@ -19,6 +20,20 @@ struct HomeView: View {
                 bottomTabBar
             }
             .ignoresSafeArea(edges: .bottom)
+            .sheet(isPresented: $showUserPicker) {
+                UserPickerSheet(
+                    users: viewModel.users,
+                    selectedId: viewModel.selectedUser?.id,
+                    onSelect: { user in
+                        viewModel.selectedUser = user
+                        showUserPicker = false
+                        Task { await viewModel.loadUserData(userId: user.id) }
+                    }
+                )
+                .presentationDetents([.medium, .large])
+                .presentationDragIndicator(.visible)
+                .presentationBackground(Color(hex: "1A1A1A"))
+            }
         }
         .task {
             await viewModel.loadUsers()
@@ -38,20 +53,22 @@ struct HomeView: View {
 
             VStack(spacing: 0) {
                 HStack {
-                    Circle()
-                        .fill(
-                            LinearGradient(
-                                colors: [Color(hex: "FF6B2C"), Color(hex: "FF8F5C")],
-                                startPoint: .topLeading,
-                                endPoint: .bottomTrailing
+                    Button { showUserPicker = true } label: {
+                        Circle()
+                            .fill(
+                                LinearGradient(
+                                    colors: [Color(hex: "FF6B2C"), Color(hex: "FF8F5C")],
+                                    startPoint: .topLeading,
+                                    endPoint: .bottomTrailing
+                                )
                             )
-                        )
-                        .frame(width: 36, height: 36)
-                        .overlay(
-                            Image(systemName: "person.fill")
-                                .font(.system(size: 16))
-                                .foregroundStyle(.white)
-                        )
+                            .frame(width: 36, height: 36)
+                            .overlay(
+                                Text(String(viewModel.selectedUser?.name.prefix(1) ?? "?"))
+                                    .font(.system(size: 16, weight: .bold))
+                                    .foregroundStyle(.white)
+                            )
+                    }
 
                     Spacer()
 
@@ -165,9 +182,9 @@ struct HomeView: View {
             }
 
             HStack(spacing: 33) {
-                actionButton(icon: "person.2.fill", label: "Pay\nfriends", destination: nil)
-                actionButton(icon: "building.columns.fill", label: "To bank &\nself a/c", destination: nil)
-                actionButton(icon: "indianrupeesign.circle.fill", label: "Check\nbalance", destination: nil)
+                actionButton(icon: "person.2.fill", label: "Pay\nfriends")
+                actionButton(icon: "building.columns.fill", label: "To bank &\nself a/c")
+                actionButton(icon: "indianrupeesign.circle.fill", label: "Check\nbalance")
                 NavigationLink {
                     SummaryView(viewModel: viewModel)
                 } label: {
@@ -180,7 +197,7 @@ struct HomeView: View {
         .padding(.top, 24)
     }
 
-    private func actionButton(icon: String, label: String, destination: AnyView?) -> some View {
+    private func actionButton(icon: String, label: String) -> some View {
         VStack(spacing: 10) {
             RoundedRectangle(cornerRadius: 16)
                 .fill(
@@ -296,6 +313,74 @@ struct HomeView: View {
         }
         .foregroundStyle(isActive ? Color(hex: "FF6B2C") : Color(hex: "6B7280"))
         .frame(maxWidth: .infinity)
+    }
+}
+
+// MARK: - User Picker Sheet
+
+private struct UserPickerSheet: View {
+    let users: [UserInfo]
+    let selectedId: String?
+    let onSelect: (UserInfo) -> Void
+
+    private let columns = [
+        GridItem(.flexible(), spacing: 8),
+        GridItem(.flexible(), spacing: 8),
+        GridItem(.flexible(), spacing: 8),
+    ]
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 16) {
+            Text("Select User")
+                .font(.system(size: 20, weight: .bold))
+                .foregroundStyle(Color(hex: "E5E6E6"))
+                .padding(.horizontal, 20)
+                .padding(.top, 8)
+
+            ScrollView {
+                LazyVGrid(columns: columns, spacing: 8) {
+                    ForEach(users) { user in
+                        Button { onSelect(user) } label: {
+                            VStack(spacing: 8) {
+                                Circle()
+                                    .fill(
+                                        user.id == selectedId
+                                            ? LinearGradient(colors: [Color(hex: "FF6B2C"), Color(hex: "FF8F5C")], startPoint: .topLeading, endPoint: .bottomTrailing)
+                                            : LinearGradient(colors: [Color.white.opacity(0.08), Color.white.opacity(0.08)], startPoint: .top, endPoint: .bottom)
+                                    )
+                                    .frame(width: 40, height: 40)
+                                    .overlay(
+                                        Text(String(user.name.prefix(1)))
+                                            .font(.system(size: 16, weight: .bold))
+                                            .foregroundStyle(user.id == selectedId ? .white : Color(hex: "9CA3AF"))
+                                    )
+
+                                Text(user.name.components(separatedBy: " ").first ?? user.name)
+                                    .font(.system(size: 11, weight: .medium))
+                                    .foregroundStyle(Color(hex: "9CA3AF"))
+                                    .lineLimit(1)
+                            }
+                            .frame(maxWidth: .infinity)
+                            .padding(.vertical, 14)
+                            .background(
+                                RoundedRectangle(cornerRadius: 16)
+                                    .fill(user.id == selectedId ? Color(hex: "FF6B2C").opacity(0.12) : Color.white.opacity(0.04))
+                                    .overlay(
+                                        RoundedRectangle(cornerRadius: 16)
+                                            .stroke(
+                                                user.id == selectedId ? Color(hex: "FF6B2C").opacity(0.4) : Color.white.opacity(0.1),
+                                                lineWidth: 0.25
+                                            )
+                                    )
+                            )
+                        }
+                        .buttonStyle(.plain)
+                    }
+                }
+                .padding(.horizontal, 20)
+                .padding(.bottom, 32)
+            }
+        }
     }
 }
 
