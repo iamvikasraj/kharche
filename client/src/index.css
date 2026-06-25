@@ -1,0 +1,37 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+:root {
+  --bg-primary: #0D0D0D;
+  --bg-card: radial-gradient(ellipse at center top, rgba(44,44,44,1) 0%, rgba(28,28,28,1) 50%, rgba(12,12,12,1) 100%);
+  --bg-card-flat: rgba(255, 255, 255, 0.06);
+  --bg-card-hover: rgba(255, 255, 255, 0.1);
+  --border-card: rgba(255, 255, 255, 0.2);
+  --text-primary: #E5E6E6;
+  --text-secondary: #9CA3AF;
+  --text-muted: #6B7280;
+  --accent-orange: #FF6B2C;
+  --accent-green: #22C55E;
+  --accent-red: #EF4444;
+  --accent-amber: #F59E0B;
+  --accent-blue: #3B82F6;
+  --radius: 16px;
+  --radius-sm: 12px;
+}
+
+body {
+  margin: 0;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI',
+    Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+#root {
+  min-height: 100vh;
+}

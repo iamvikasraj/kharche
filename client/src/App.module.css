@@ -1,0 +1,45 @@
+.app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-primary);
+}
+
+.header {
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.brand {
+  margin: 0;
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: var(--accent-orange);
+  letter-spacing: -0.5px;
+  font-style: italic;
+}
+
+.userPicker {
+  font-size: 0.8rem;
+  padding: 8px 12px;
+  border: 0.25px solid var(--border-card);
+  border-radius: 20px;
+  background: var(--bg-card);
+  color: var(--text-primary);
+  max-width: 160px;
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+.userPicker option {
+  background: #1A1A1A;
+  color: var(--text-primary);
+}
+
+.main {
+  flex: 1;
+  padding-bottom: 80px;
+}
