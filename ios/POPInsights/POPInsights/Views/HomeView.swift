@@ -6,20 +6,16 @@ struct HomeView: View {
 
     var body: some View {
         NavigationStack {
-            ZStack(alignment: .bottom) {
-                ScrollView {
-                    VStack(spacing: 0) {
-                        heroSection
-                        horizontalCards
-                        everythingUPISection
-                    }
-                    .padding(.bottom, 100)
+            ScrollView {
+                VStack(spacing: 0) {
+                    heroSection
+                    horizontalCards
+                    everythingUPISection
                 }
-                .background(Color(hex: "0D0D0D"))
-
-                bottomTabBar
+                .padding(.bottom, 20)
             }
-            .ignoresSafeArea(edges: .bottom)
+            .background(Color(hex: "0D0D0D"))
+            .ignoresSafeArea(edges: .top)
             .sheet(isPresented: $showUserPicker) {
                 UserPickerSheet(
                     users: viewModel.users,
@@ -261,59 +257,6 @@ struct HomeView: View {
         .frame(width: 67)
     }
 
-    // MARK: - Bottom Tab Bar
-
-    private var bottomTabBar: some View {
-        HStack(spacing: 0) {
-            tabItem(icon: "house.fill", label: "Home", isActive: true)
-            tabItem(icon: "bag.fill", label: "Shop", isActive: false)
-            tabItem(icon: "creditcard.fill", label: "Card", isActive: false)
-
-            Spacer()
-
-            Circle()
-                .fill(Color.white)
-                .frame(width: 48, height: 48)
-                .overlay(
-                    Image(systemName: "qrcode.viewfinder")
-                        .font(.system(size: 22))
-                        .foregroundStyle(.black)
-                )
-                .shadow(color: .black.opacity(0.3), radius: 8, y: 4)
-                .padding(.trailing, 8)
-        }
-        .padding(.horizontal, 12)
-        .padding(.vertical, 8)
-        .padding(.bottom, 16)
-        .background(
-            RoundedRectangle(cornerRadius: 36)
-                .fill(
-                    RadialGradient(
-                        colors: [Color(hex: "2C2C2C"), Color(hex: "1C1C1C"), Color(hex: "0C0C0C")],
-                        center: .top,
-                        startRadius: 0,
-                        endRadius: 40
-                    )
-                )
-                .overlay(
-                    RoundedRectangle(cornerRadius: 36)
-                        .stroke(Color.white.opacity(0.2), lineWidth: 0.25)
-                )
-        )
-        .padding(.horizontal, 16)
-        .padding(.bottom, 8)
-    }
-
-    private func tabItem(icon: String, label: String, isActive: Bool) -> some View {
-        VStack(spacing: 4) {
-            Image(systemName: icon)
-                .font(.system(size: 20))
-            Text(label)
-                .font(.system(size: 10, weight: .medium))
-        }
-        .foregroundStyle(isActive ? Color(hex: "FF6B2C") : Color(hex: "6B7280"))
-        .frame(maxWidth: .infinity)
-    }
 }
 
 // MARK: - User Picker Sheet

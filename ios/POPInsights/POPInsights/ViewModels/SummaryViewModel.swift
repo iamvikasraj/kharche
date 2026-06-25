@@ -1,5 +1,6 @@
 import Foundation
 
+@MainActor
 @Observable
 final class SummaryViewModel {
     var users: [UserInfo] = []
@@ -78,7 +79,7 @@ final class SummaryViewModel {
         }
     }
 
-    private func fetch(_ urlString: String) async throws -> Data {
+    private nonisolated func fetch(_ urlString: String) async throws -> Data {
         guard let url = URL(string: urlString) else {
             throw URLError(.badURL)
         }
