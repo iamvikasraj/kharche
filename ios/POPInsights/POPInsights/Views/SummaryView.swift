@@ -11,87 +11,89 @@ struct SummaryView: View {
 
     var body: some View {
         ScrollView {
-            VStack(spacing: 20) {
-                greetingSection
+            VStack(alignment: .leading, spacing: 20) {
+                titleSection
+                heroCard
                 statsGrid
-                breakdownSection
                 recentTransactionsSection
             }
             .padding(.horizontal, 20)
-            .padding(.vertical, 16)
+            .padding(.top, 8)
+            .padding(.bottom, 24)
         }
         .background(Color(hex: "0D0D0D"))
-        .navigationTitle("Transaction History")
-        .navigationBarTitleDisplayMode(.inline)
-        .toolbarColorScheme(.dark, for: .navigationBar)
     }
 
-    // MARK: - Greeting
-
-    private var greetingSection: some View {
+    private var titleSection: some View {
         VStack(alignment: .leading, spacing: 4) {
-            Text("Hi, \(viewModel.selectedUser?.name ?? "User")")
+            Text("Overview")
                 .font(.system(size: 24, weight: .bold))
                 .foregroundStyle(Color(hex: "E5E6E6"))
-            Text("Here's your financial overview")
-                .font(.system(size: 15))
+            Text("\(viewModel.summary?.txnCount ?? 0) transactions")
+                .font(.system(size: 14))
                 .foregroundStyle(Color(hex: "9CA3AF"))
         }
-        .frame(maxWidth: .infinity, alignment: .leading)
     }
 
-    // MARK: - Stats Grid
+    private var heroCard: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Text("TOTAL SPEND")
+                .font(.system(size: 11, weight: .semibold))
+                .foregroundStyle(.white.opacity(0.8))
+                .tracking(0.5)
+            Text("₹\(viewModel.summary?.totalSpend.inrFormatted ?? "0")")
+                .font(.system(size: 36, weight: .heavy))
+                .foregroundStyle(.white)
+                .tracking(-1)
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .padding(24)
+        .background(
+            LinearGradient(
+                colors: [Color(hex: "FF6B2C"), Color(hex: "FF8F5C")],
+                startPoint: .topLeading,
+                endPoint: .bottomTrailing
+            )
+        )
+        .clipShape(RoundedRectangle(cornerRadius: 16))
+        .overlay(
+            RoundedRectangle(cornerRadius: 16)
+                .stroke(Color.white.opacity(0.2), lineWidth: 0.25)
+        )
+    }
 
     private var statsGrid: some View {
         let s = viewModel.summary
         let cards: [(String, String, Color)] = [
-            ("Total Spend", "₹\(s?.totalSpend.inrFormatted ?? "0")", Color(hex: "EF4444")),
             ("Cashback", "₹\(s?.totalCashback.inrFormatted ?? "0")", Color(hex: "22C55E")),
-            ("Coins Earned", "\(s?.totalCoins ?? 0)", Color(hex: "F59E0B")),
-            ("Failed Txns", "₹\(s?.failedAmount.inrFormatted ?? "0")", Color(hex: "6B7280")),
+            ("POPcoins", "\(s?.totalCoins ?? 0)", Color(hex: "F59E0B")),
+            ("Failed", "₹\(s?.failedAmount.inrFormatted ?? "0")", Color(hex: "EF4444")),
         ]
 
-        return LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 12) {
+        return HStack(spacing: 10) {
             ForEach(Array(cards.enumerated()), id: \.offset) { _, card in
-                StatCard(label: card.0, value: card.1, color: card.2)
-            }
-            StatCard(
-                label: "Transactions",
-                value: "\(s?.txnCount ?? 0)",
-                color: Color(hex: "FF6B2C")
-            )
-        }
-    }
-
-    // MARK: - Breakdown
-
-    private var breakdownSection: some View {
-        VStack(alignment: .leading, spacing: 12) {
-            Text("Spending Breakdown")
-                .font(.system(size: 18, weight: .semibold))
-                .foregroundStyle(Color(hex: "E5E6E6"))
-
-            let maxAmount = viewModel.breakdown.map(\.amount).max() ?? 1
-
-            VStack(spacing: 0) {
-                ForEach(Array(viewModel.breakdown.enumerated()), id: \.element.id) { index, cat in
-                    CategoryRow(
-                        category: cat,
-                        color: categoryColors[index % categoryColors.count],
-                        maxAmount: maxAmount
-                    )
-                    if index < viewModel.breakdown.count - 1 {
-                        Divider().padding(.horizontal, 16)
-                    }
+                VStack(alignment: .leading, spacing: 8) {
+                    Text(card.0.uppercased())
+                        .font(.system(size: 10, weight: .medium))
+                        .foregroundStyle(Color(hex: "9CA3AF"))
+                        .tracking(0.3)
+                    Text(card.1)
+                        .font(.system(size: 16, weight: .bold))
+                        .foregroundStyle(card.2)
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.7)
                 }
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .padding(14)
+                .background(Color(hex: "1C1C1C"))
+                .clipShape(RoundedRectangle(cornerRadius: 16))
+                .overlay(
+                    RoundedRectangle(cornerRadius: 16)
+                        .stroke(Color.white.opacity(0.1), lineWidth: 0.25)
+                )
             }
-            .background(Color(hex: "1C1C1C"))
-            .clipShape(RoundedRectangle(cornerRadius: 16))
-            .overlay(RoundedRectangle(cornerRadius: 16).stroke(Color.white.opacity(0.2), lineWidth: 0.25))
         }
     }
-
-    // MARK: - Recent Transactions
 
     private var recentTransactionsSection: some View {
         VStack(alignment: .leading, spacing: 12) {
@@ -103,86 +105,18 @@ struct SummaryView: View {
                 ForEach(Array(viewModel.recentTransactions.enumerated()), id: \.element.id) { index, txn in
                     TransactionRow(transaction: txn)
                     if index < viewModel.recentTransactions.count - 1 {
-                        Divider().padding(.horizontal, 16)
+                        Divider()
+                            .background(Color.white.opacity(0.06))
+                            .padding(.horizontal, 16)
                     }
                 }
             }
             .background(Color(hex: "1C1C1C"))
             .clipShape(RoundedRectangle(cornerRadius: 16))
-            .overlay(RoundedRectangle(cornerRadius: 16).stroke(Color.white.opacity(0.2), lineWidth: 0.25))
+            .overlay(RoundedRectangle(cornerRadius: 16).stroke(Color.white.opacity(0.1), lineWidth: 0.25))
         }
-        .padding(.bottom, 20)
     }
 }
-
-// MARK: - Stat Card
-
-private struct StatCard: View {
-    let label: String
-    let value: String
-    let color: Color
-
-    var body: some View {
-        VStack(alignment: .leading, spacing: 6) {
-            Text(label)
-                .font(.system(size: 12, weight: .medium))
-                .foregroundStyle(Color(hex: "9CA3AF"))
-            Text(value)
-                .font(.system(size: 20, weight: .bold))
-                .foregroundStyle(color)
-                .lineLimit(1)
-                .minimumScaleFactor(0.7)
-        }
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .padding(16)
-        .background(Color(hex: "1C1C1C"))
-        .clipShape(RoundedRectangle(cornerRadius: 16))
-        .overlay(RoundedRectangle(cornerRadius: 16).stroke(Color.white.opacity(0.2), lineWidth: 0.25))
-    }
-}
-
-// MARK: - Category Row
-
-private struct CategoryRow: View {
-    let category: CategoryBreakdown
-    let color: Color
-    let maxAmount: Double
-
-    var body: some View {
-        VStack(alignment: .leading, spacing: 8) {
-            HStack {
-                Circle()
-                    .fill(color)
-                    .frame(width: 10, height: 10)
-                Text(category.name)
-                    .font(.system(size: 14, weight: .semibold))
-                    .foregroundStyle(Color(hex: "E5E6E6"))
-                Spacer()
-                Text("₹\(category.amount.inrFormatted)")
-                    .font(.system(size: 14, weight: .semibold))
-                    .foregroundStyle(Color(hex: "E5E6E6"))
-            }
-            GeometryReader { geo in
-                ZStack(alignment: .leading) {
-                    RoundedRectangle(cornerRadius: 4)
-                        .fill(Color.white.opacity(0.08))
-                        .frame(height: 6)
-                    RoundedRectangle(cornerRadius: 4)
-                        .fill(color)
-                        .frame(width: geo.size.width * (category.amount / maxAmount), height: 6)
-                }
-            }
-            .frame(height: 6)
-            Text("\(String(format: "%.1f", category.percent))%")
-                .font(.system(size: 11))
-                .foregroundStyle(Color(hex: "6B7280"))
-        }
-        .padding(.horizontal, 16)
-        .padding(.vertical, 12)
-    }
-}
-
-// MARK: - Transaction Row
 
 private struct TransactionRow: View {
     let transaction: Transaction
@@ -251,8 +185,4 @@ private struct TransactionRow: View {
         ]
         return map[transaction.category] ?? Color(hex: "FF6B2C")
     }
-}
-
-#Preview {
-    SummaryView(viewModel: SummaryViewModel())
 }

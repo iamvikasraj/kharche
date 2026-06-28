@@ -7,6 +7,8 @@ final class SummaryViewModel {
     var selectedUser: UserInfo?
     var summary: SummaryData?
     var breakdown: [CategoryBreakdown] = []
+    var trends: [MonthTrend] = []
+    var recurring: [RecurringMerchant] = []
     var recentTransactions: [Transaction] = []
     var isLoading = true
     var errorMessage: String?
@@ -34,10 +36,12 @@ final class SummaryViewModel {
 
         async let summaryTask = fetch("\(baseURL)/users/\(userId)/summary")
         async let breakdownTask = fetch("\(baseURL)/users/\(userId)/breakdown")
+        async let trendsTask = fetch("\(baseURL)/users/\(userId)/trends")
+        async let recurringTask = fetch("\(baseURL)/users/\(userId)/recurring")
         async let txnTask = fetch("\(baseURL)/users/\(userId)/transactions?limit=5")
 
         do {
-            let (summaryData, breakdownData, txnData) = try await (summaryTask, breakdownTask, txnTask)
+            let (summaryData, breakdownData, trendsData, recurringData, txnData) = try await (summaryTask, breakdownTask, trendsTask, recurringTask, txnTask)
 
             let sr = try JSONDecoder().decode(SummaryResponse.self, from: summaryData)
             summary = SummaryData(
@@ -51,6 +55,16 @@ final class SummaryViewModel {
             let br = try JSONDecoder().decode(BreakdownResponse.self, from: breakdownData)
             breakdown = br.categories.map {
                 CategoryBreakdown(name: $0.name, amount: Double($0.amount) ?? 0, percent: Double($0.percent) ?? 0)
+            }
+
+            let trendRes = try JSONDecoder().decode(TrendsResponse.self, from: trendsData)
+            trends = trendRes.months.map {
+                MonthTrend(month: $0.month, spend: Double($0.spend) ?? 0, cashback: Double($0.cashback) ?? 0)
+            }
+
+            let recRes = try JSONDecoder().decode(RecurringResponse.self, from: recurringData)
+            recurring = recRes.recurring.map {
+                RecurringMerchant(payeeName: $0.payeeName, txnCount: $0.txnCount, avgAmount: Double($0.avgAmount) ?? 0, totalAmount: Double($0.totalAmount) ?? 0)
             }
 
             let tr = try JSONDecoder().decode(TransactionsResponse.self, from: txnData)
