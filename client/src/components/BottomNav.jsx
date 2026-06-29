@@ -3,19 +3,7 @@ import styles from './BottomNav.module.css';
 
 const navItems = [
   {
-    to: '/',
-    label: 'Summary',
-    icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-        <rect x="3" y="3" width="7" height="7" rx="1" />
-        <rect x="14" y="3" width="7" height="7" rx="1" />
-        <rect x="3" y="14" width="7" height="7" rx="1" />
-        <rect x="14" y="14" width="7" height="7" rx="1" />
-      </svg>
-    ),
-  },
-  {
-    to: '/breakdown',
+    path: '/breakdown',
     label: 'Breakdown',
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -25,7 +13,7 @@ const navItems = [
     ),
   },
   {
-    to: '/trends',
+    path: '/trends',
     label: 'Trends',
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -35,7 +23,7 @@ const navItems = [
     ),
   },
   {
-    to: '/recurring',
+    path: '/recurring',
     label: 'Recurring',
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -46,14 +34,14 @@ const navItems = [
   },
 ];
 
-export default function BottomNav() {
+export default function BottomNav({ basePath = '' }) {
   return (
     <nav className={styles.nav}>
-      {navItems.map(({ to, label, icon }) => (
+      {navItems.map(({ path, label, icon }) => (
         <NavLink
-          key={to}
-          to={to}
-          end={to === '/'}
+          key={path}
+          to={`${basePath}${path}`}
+          end={path === '/'}
           className={({ isActive }) =>
             isActive ? `${styles.link} ${styles.active}` : styles.link
           }

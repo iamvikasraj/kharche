@@ -86,14 +86,38 @@
 		A50000050000000000000005 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				A50000080000000000000008 /* Home */,
+				A50000090000000000000009 /* Insights */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		A50000080000000000000008 /* Home */ = {
+			isa = PBXGroup;
+			children = (
 				A20000060000000000000006 /* HomeView.swift */,
-				A20000020000000000000002 /* SummaryView.swift */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
+		A50000090000000000000009 /* Insights */ = {
+			isa = PBXGroup;
+			children = (
 				A20000080000000000000008 /* InsightsView.swift */,
+				A5000010000000000000000A /* Subviews */,
+			);
+			path = Insights;
+			sourceTree = "<group>";
+		};
+		A5000010000000000000000A /* Subviews */ = {
+			isa = PBXGroup;
+			children = (
+				A20000020000000000000002 /* SummaryView.swift */,
 				A20000090000000000000009 /* BreakdownView.swift */,
 				A2000010000000000000000A /* TrendsView.swift */,
 				A2000011000000000000000B /* RecurringView.swift */,
 			);
-			path = Views;
+			path = Subviews;
 			sourceTree = "<group>";
 		};
 		A50000060000000000000006 /* Theme */ = {

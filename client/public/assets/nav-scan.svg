@@ -1,0 +1,13 @@
+<svg preserveAspectRatio="none" width="100%" height="100%" overflow="visible" style="display: block;" viewBox="0 0 23.5 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Group 7">
+<g id="Group 5">
+<path id="Rectangle 6" d="M8.5 1H5.5C3.84315 1 2.5 2.34315 2.5 4L2.5 6.5" stroke="var(--stroke-0, black)" stroke-width="2" stroke-linecap="round"/>
+<path id="Rectangle 7" d="M20.25 7L20.25 4C20.25 2.34315 18.9069 1 17.25 1L14.75 1" stroke="var(--stroke-0, black)" stroke-width="2" stroke-linecap="round"/>
+</g>
+<g id="Group 6">
+<path id="Rectangle 6_2" d="M8.5 19H5.5C3.84315 19 2.5 17.6569 2.5 16L2.5 13.5" stroke="var(--stroke-0, black)" stroke-width="2" stroke-linecap="round"/>
+<path id="Rectangle 7_2" d="M20.25 13L20.25 16C20.25 17.6569 18.9069 19 17.25 19L14.75 19" stroke="var(--stroke-0, black)" stroke-width="2" stroke-linecap="round"/>
+</g>
+<path id="Vector 13" d="M1 10H22.5" stroke="var(--stroke-0, black)" stroke-width="2" stroke-linecap="round"/>
+</g>
+</svg>

@@ -18,6 +18,7 @@ struct HomeView: View {
                 }
                 .padding(.bottom, 120)
             }
+            .scrollIndicators(.hidden)
 
             // Sticky top bar
             HStack {
@@ -67,7 +68,7 @@ struct HomeView: View {
             .padding(.top, 65)
         }
         .ignoresSafeArea(edges: .top)
-        .background(Color(hex: "0D0D0D"))
+        .background(POPTheme.bg)
     }
 
     // MARK: - Hero Section
@@ -84,13 +85,7 @@ struct HomeView: View {
     private var bannerCards: some View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack(spacing: 10) {
-                Image("banner 1")
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(height: 86)
-                    .clipShape(RoundedRectangle(cornerRadius: 16))
-
-                ForEach(0..<2, id: \.self) { _ in
+                ForEach(0..<3, id: \.self) { _ in
                     Image("banner 1")
                         .resizable()
                         .aspectRatio(contentMode: .fit)
@@ -110,7 +105,7 @@ struct HomeView: View {
             HStack {
                 Text("Everything UPI")
                     .font(.system(size: 18, weight: .medium))
-                    .foregroundStyle(Color(hex: "E5E6E6"))
+                    .foregroundStyle(POPTheme.textPrimary)
                     .tracking(-0.36)
                 Spacer()
                 Image("ChevronRight")
@@ -120,9 +115,9 @@ struct HomeView: View {
             }
 
             HStack(spacing: 33) {
-                upiButton(image: "IconPayFriends", label: "Pay\nfriends")
-                upiButton(image: "IconBank", label: "To bank &\nself a/c")
-                upiButton(image: "IconBalance", label: "Check\nbalance")
+                upiButtonContent(image: "IconPayFriends", label: "Pay\nfriends")
+                upiButtonContent(image: "IconBank", label: "To bank &\nself a/c")
+                upiButtonContent(image: "IconBalance", label: "Check\nbalance")
                 NavigationLink {
                     InsightsView(viewModel: viewModel)
                 } label: {
@@ -133,10 +128,6 @@ struct HomeView: View {
         }
         .padding(.horizontal, 12)
         .padding(.top, 30)
-    }
-
-    private func upiButton(image: String, label: String) -> some View {
-        upiButtonContent(image: image, label: label)
     }
 
     private func upiButtonContent(image: String, label: String) -> some View {
@@ -225,7 +216,7 @@ struct HomeView: View {
             HStack {
                 Text("Recharges and bills")
                     .font(.system(size: 18, weight: .medium))
-                    .foregroundStyle(Color(hex: "E5E6E6"))
+                    .foregroundStyle(POPTheme.textPrimary)
                     .tracking(-0.54)
                 Spacer()
                 Image("ChevronRight")
@@ -304,8 +295,19 @@ struct HomeView: View {
     // MARK: - Featured Card
 
     private var featuredSection: some View {
-        FeaturedCarousel()
-            .padding(.top, 40)
+        VStack(spacing: 40) {
+            FeaturedCarousel()
+            footerSection
+        }
+        .padding(.top, 40)
+    }
+
+    private var footerSection: some View {
+        Image("footer")
+            .resizable()
+            .aspectRatio(contentMode: .fit)
+            .frame(maxWidth: .infinity)
+            .padding(.horizontal, 13)
     }
 }
 
@@ -319,12 +321,11 @@ private struct FeaturedCarousel: View {
         VStack(spacing: 20) {
             TabView(selection: $currentPage) {
                 ForEach(0..<pageCount, id: \.self) { index in
-                    RoundedRectangle(cornerRadius: 16)
-                        .fill(Color.black)
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 16)
-                                .stroke(Color.white.opacity(0.2), lineWidth: 0.25)
-                        )
+                    Image("cashback image")
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                        .frame(height: 360)
+                        .clipShape(RoundedRectangle(cornerRadius: 17))
                         .padding(.horizontal, 13)
                         .tag(index)
                 }

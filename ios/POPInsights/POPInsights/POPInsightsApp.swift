@@ -28,7 +28,7 @@ struct MainTabView: View {
             }
 
             Tab("Scan", systemImage: "qrcode.viewfinder", value: 2, role: .search) {
-                Color(hex: "0D0D0D").ignoresSafeArea()
+                POPTheme.bg.ignoresSafeArea()
             }
 
             Tab("Card", systemImage: "creditcard.fill", value: 3) {
@@ -67,13 +67,13 @@ private struct PlaceholderView: View {
                 .foregroundStyle(Color(hex: "4D4D4D"))
             Text(title)
                 .font(.system(size: 20, weight: .bold))
-                .foregroundStyle(Color(hex: "E5E6E6"))
+                .foregroundStyle(POPTheme.textPrimary)
             Text("Coming soon")
                 .font(.system(size: 14))
-                .foregroundStyle(Color(hex: "6B7280"))
+                .foregroundStyle(POPTheme.textMuted)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(Color(hex: "0D0D0D"))
+        .background(POPTheme.bg)
     }
 }
 
@@ -94,7 +94,7 @@ struct UserPickerSheet: View {
         VStack(alignment: .leading, spacing: 16) {
             Text("Select User")
                 .font(.system(size: 20, weight: .bold))
-                .foregroundStyle(Color(hex: "E5E6E6"))
+                .foregroundStyle(POPTheme.textPrimary)
                 .padding(.horizontal, 20)
                 .padding(.top, 8)
 
@@ -113,12 +113,12 @@ struct UserPickerSheet: View {
                                     .overlay(
                                         Text(String(user.name.prefix(1)))
                                             .font(.system(size: 16, weight: .bold))
-                                            .foregroundStyle(user.id == selectedId ? .white : Color(hex: "9CA3AF"))
+                                            .foregroundStyle(user.id == selectedId ? .white : POPTheme.textSecondary)
                                     )
 
                                 Text(user.name.components(separatedBy: " ").first ?? user.name)
                                     .font(.system(size: 11, weight: .medium))
-                                    .foregroundStyle(Color(hex: "9CA3AF"))
+                                    .foregroundStyle(POPTheme.textSecondary)
                                     .lineLimit(1)
                             }
                             .frame(maxWidth: .infinity)

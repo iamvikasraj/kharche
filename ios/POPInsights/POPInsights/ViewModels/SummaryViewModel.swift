@@ -102,12 +102,16 @@ final class SummaryViewModel {
     }
 }
 
+private let inrFormatter: NumberFormatter = {
+    let f = NumberFormatter()
+    f.numberStyle = .decimal
+    f.locale = Locale(identifier: "en_IN")
+    f.maximumFractionDigits = 0
+    return f
+}()
+
 extension Double {
     var inrFormatted: String {
-        let formatter = NumberFormatter()
-        formatter.numberStyle = .decimal
-        formatter.locale = Locale(identifier: "en_IN")
-        formatter.maximumFractionDigits = 0
-        return formatter.string(from: NSNumber(value: self)) ?? "\(Int(self))"
+        inrFormatter.string(from: NSNumber(value: self)) ?? "\(Int(self))"
     }
 }

@@ -1,0 +1,307 @@
+.page {
+  min-height: 100vh;
+  background: var(--bg-primary);
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* Hero */
+.hero {
+  position: relative;
+  height: 481px;
+  background: linear-gradient(to bottom, #232323, #0d0d0d 83.37%);
+  overflow: hidden;
+}
+
+.heroBg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  pointer-events: none;
+}
+
+.heroTop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 65px 16px 10px;
+  z-index: 50;
+}
+
+.userDot {
+  width: 32px;
+  height: 32px;
+  border-radius: 52px;
+  background: linear-gradient(to bottom, #ff720c, #cb1400);
+  border: 0.4px solid #793f29;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.coinBadge {
+  width: 43px;
+  height: 28px;
+  border-radius: 16px;
+  border: 0.25px solid rgba(255, 255, 255, 0.2);
+  background: radial-gradient(ellipse at center top, rgba(44,44,44,1) 0%, rgba(28,28,28,1) 50%, rgba(12,12,12,1) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.coinIcon {
+  width: 14px;
+  height: 14px;
+  border-radius: 24px;
+  object-fit: cover;
+}
+
+/* Stat Cards */
+.statsRow {
+  display: flex;
+  gap: 10px;
+  padding: 0 12px;
+  margin-top: -61px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  position: relative;
+  z-index: 1;
+}
+
+.statsRow::-webkit-scrollbar {
+  display: none;
+}
+
+.bannerCard {
+  min-width: 324px;
+  height: 86px;
+  border-radius: 16px;
+  border: 0.25px solid rgba(255, 255, 255, 0.2);
+  background: radial-gradient(ellipse at center top, rgba(44,44,44,1) 0%, rgba(28,28,28,1) 50%, rgba(12,12,12,1) 100%);
+  flex-shrink: 0;
+}
+
+/* Everything UPI */
+.upiSection {
+  display: flex;
+  flex-direction: column;
+  gap: 17px;
+  padding: 30px 12px 0;
+}
+
+.upiHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.upiTitle {
+  font-size: 18px;
+  font-weight: 500;
+  color: #e5e6e6;
+  letter-spacing: -0.36px;
+}
+
+.chevron {
+  width: 4.5px;
+  height: 9px;
+}
+
+.upiGrid {
+  display: flex;
+  justify-content: space-between;
+}
+
+.upiBtn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  width: 67px;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  color: inherit;
+}
+
+.upiBtnIcon {
+  width: 67px;
+  height: 67px;
+  border-radius: 16px;
+  border: 0.25px solid rgba(255, 255, 255, 0.2);
+  background: radial-gradient(ellipse at center top, rgba(44,44,44,1) 0%, rgba(28,28,28,1) 50%, rgba(12,12,12,1) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.upiBtnIcon img {
+  width: 22px;
+  height: 22px;
+}
+
+.bankIcon {
+  width: 19px !important;
+  height: 19.5px !important;
+}
+
+.upiBtnLabel {
+  font-size: 12px;
+  font-weight: 500;
+  color: #e6e7e7;
+  text-align: center;
+  white-space: pre-line;
+  line-height: 16px;
+  height: 32px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+/* UPI Pills */
+.pillRow {
+  display: flex;
+  gap: 14px;
+  padding: 24px 16px 0;
+}
+
+.pill {
+  padding: 4px 12px;
+  border-radius: 16px;
+  border: 0.25px solid rgba(255, 255, 255, 0.2);
+  background: radial-gradient(ellipse at center top, rgba(44,44,44,1) 0%, rgba(28,28,28,1) 50%, rgba(12,12,12,1) 100%);
+  font-size: 12px;
+  font-weight: 500;
+  color: #b3b3b3;
+  line-height: 16px;
+}
+
+/* Sections */
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 28px 12px 0;
+}
+
+.sectionHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.sectionTitle {
+  font-size: 18px;
+  font-weight: 500;
+  color: #e5e6e6;
+  letter-spacing: -0.36px;
+}
+
+/* Recharges */
+.rechargeRow {
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.rechargeRow::-webkit-scrollbar {
+  display: none;
+}
+
+.rechargeCard {
+  width: 115px;
+  min-width: 115px;
+  height: 128px;
+  border-radius: 16px;
+  border: 0.25px solid rgba(255, 255, 255, 0.2);
+  background: black;
+  flex-shrink: 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.rechargeCardGreen {
+  background:
+    radial-gradient(ellipse at left center, rgba(0,52,39,1) 0%, rgba(12,12,12,0) 100%),
+    radial-gradient(ellipse at right center, rgba(0,52,39,1) 0%, rgba(12,12,12,0) 100%),
+    black;
+}
+
+.rechargeCardPurple {
+  background:
+    radial-gradient(ellipse at left center, rgba(59,5,78,1) 0%, rgba(36,9,45,0.5) 50%, rgba(12,12,12,0) 100%),
+    radial-gradient(ellipse at right center, rgba(70,3,93,1) 0%, rgba(41,8,53,0.5) 50%, rgba(12,12,12,0) 100%),
+    black;
+}
+
+.rechargeLabel {
+  position: absolute;
+  bottom: 10px;
+  left: 0;
+  right: 0;
+  font-size: 12px;
+  font-weight: 500;
+  color: #bababa;
+  line-height: 16px;
+  text-align: center;
+}
+
+/* What more? */
+.whatMore {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 0 0;
+}
+
+.whatMoreImg {
+  width: 193px;
+  height: auto;
+}
+
+/* Featured Card */
+.featuredSection {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  padding: 40px 13px 0;
+}
+
+.featuredCard {
+  width: 100%;
+  height: 360px;
+  border-radius: 16px;
+  border: 0.25px solid rgba(255, 255, 255, 0.2);
+  background: black;
+}
+
+.carouselDots {
+  height: 8px;
+  width: 88px;
+}
+
+.carouselDotsImg {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.bottomSpacer {
+  height: 100px;
+}
+

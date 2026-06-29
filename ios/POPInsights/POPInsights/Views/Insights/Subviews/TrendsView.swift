@@ -8,25 +8,22 @@ struct TrendsView: View {
     }
 
     var body: some View {
-        ScrollView {
-            VStack(alignment: .leading, spacing: 20) {
-                VStack(alignment: .leading, spacing: 4) {
-                    Text("Trends")
-                        .font(.system(size: 24, weight: .bold))
-                        .foregroundStyle(Color(hex: "E5E6E6"))
-                    Text("Monthly spending patterns")
-                        .font(.system(size: 14))
-                        .foregroundStyle(Color(hex: "9CA3AF"))
-                }
-
-                barChart
-                monthTable
+        VStack(alignment: .leading, spacing: 20) {
+            VStack(alignment: .leading, spacing: 4) {
+                Text("Trends")
+                    .font(.system(size: 24, weight: .bold))
+                    .foregroundStyle(POPTheme.textPrimary)
+                Text("Monthly spending patterns")
+                    .font(.system(size: 14))
+                    .foregroundStyle(POPTheme.textSecondary)
             }
-            .padding(.horizontal, 20)
-            .padding(.top, 8)
-            .padding(.bottom, 24)
+
+            barChart
+            monthTable
         }
-        .background(Color(hex: "0D0D0D"))
+        .padding(.horizontal, 20)
+        .padding(.top, 16)
+        .padding(.bottom, 100)
     }
 
     private var barChart: some View {
@@ -35,12 +32,12 @@ struct TrendsView: View {
                 VStack(spacing: 6) {
                     Text("₹\(Int(month.spend / 1000))k")
                         .font(.system(size: 9, weight: .medium))
-                        .foregroundStyle(Color(hex: "9CA3AF"))
+                        .foregroundStyle(POPTheme.textSecondary)
 
                     RoundedRectangle(cornerRadius: 6)
                         .fill(
                             LinearGradient(
-                                colors: [Color(hex: "FF6B2C"), Color(hex: "FF8F5C")],
+                                colors: [POPTheme.accent, POPTheme.accentLight],
                                 startPoint: .bottom,
                                 endPoint: .top
                             )
@@ -49,15 +46,13 @@ struct TrendsView: View {
 
                     Text(month.monthLabel)
                         .font(.system(size: 10, weight: .medium))
-                        .foregroundStyle(Color(hex: "6B7280"))
+                        .foregroundStyle(POPTheme.textMuted)
                 }
                 .frame(maxWidth: .infinity)
             }
         }
         .padding(20)
-        .background(Color(hex: "1C1C1C"))
-        .clipShape(RoundedRectangle(cornerRadius: 16))
-        .overlay(RoundedRectangle(cornerRadius: 16).stroke(Color.white.opacity(0.1), lineWidth: 0.25))
+        .popCard()
     }
 
     private var monthTable: some View {
@@ -66,29 +61,36 @@ struct TrendsView: View {
                 HStack {
                     Text(month.month)
                         .font(.system(size: 14, weight: .medium))
-                        .foregroundStyle(Color(hex: "9CA3AF"))
+                        .foregroundStyle(POPTheme.textSecondary)
                     Spacer()
                     VStack(alignment: .trailing, spacing: 2) {
                         Text("₹\(month.spend.inrFormatted)")
                             .font(.system(size: 14, weight: .semibold))
-                            .foregroundStyle(Color(hex: "E5E6E6"))
+                            .foregroundStyle(POPTheme.textPrimary)
                         Text("+₹\(month.cashback.inrFormatted)")
                             .font(.system(size: 11, weight: .medium))
-                            .foregroundStyle(Color(hex: "22C55E"))
+                            .foregroundStyle(POPTheme.green)
                     }
                 }
                 .padding(.horizontal, 16)
                 .padding(.vertical, 14)
 
                 if index < viewModel.trends.count - 1 {
-                    Divider()
-                        .background(Color.white.opacity(0.06))
-                        .padding(.horizontal, 16)
+                    Divider().background(Color.white.opacity(0.06)).padding(.horizontal, 16)
                 }
             }
         }
-        .background(Color(hex: "1C1C1C"))
-        .clipShape(RoundedRectangle(cornerRadius: 16))
-        .overlay(RoundedRectangle(cornerRadius: 16).stroke(Color.white.opacity(0.1), lineWidth: 0.25))
+        .popCard()
     }
+}
+
+#Preview("Trends") {
+    @Previewable @State var viewModel = SummaryViewModel()
+    ScrollView {
+        TrendsView(viewModel: viewModel)
+    }
+    .scrollIndicators(.hidden)
+    .task { await viewModel.loadUsers() }
+    .background(POPTheme.bg)
+    .preferredColorScheme(.dark)
 }
