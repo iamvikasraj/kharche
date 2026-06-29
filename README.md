@@ -1,38 +1,62 @@
-# Kharche — UPI Financial Insights
+# Kharche — UPI Financial Insights for POP
 
-A full-stack financial insights product built for POP's Full Stack Builder Assignment. Helps users understand their spending patterns, recurring expenses, and financial behavior through an intuitive mobile-first interface — built as both a **React web app** and a **native SwiftUI iOS app**.
+> **POP Full Stack Builder Assignment** — A financial insights product that helps users understand their UPI spending patterns, recurring expenses, and rewards through a polished mobile-first experience.
 
-**Live Web App:** [https://client-three-cyan-80.vercel.app](https://client-three-cyan-80.vercel.app)
-**Design File:** [Figma](https://www.figma.com/design/sjRkyjz7u5fB6NByTHohwK/Design?node-id=3-17)
-**API Server:** [https://server-production-dd0d.up.railway.app](https://server-production-dd0d.up.railway.app)
+| | |
+|---|---|
+| **Live Web App** | [https://client-three-cyan-80.vercel.app](https://client-three-cyan-80.vercel.app) |
+| **Design File** | [Figma](https://www.figma.com/design/sjRkyjz7u5fB6NByTHohwK/Design?node-id=3-17) |
+| **API Server** | [https://server-production-dd0d.up.railway.app](https://server-production-dd0d.up.railway.app) |
+| **GitHub** | [https://github.com/iamvikasraj/kharche](https://github.com/iamvikasraj/kharche) |
+
+Open the web app on your phone browser — it's live and immediately testable, no build process needed.
+
+---
+
+## Table of Contents
+
+- [Product Thinking](#product-thinking)
+- [Design Rationale](#design-rationale)
+- [Usage Guide](#usage-guide)
+- [Tech Stack & Decisions](#tech-stack--decisions)
+- [API Reference](#api-reference)
+- [Database Schema](#database-schema)
+- [Running Locally](#running-locally)
+- [iOS Native App](#ios-native-app)
+- [Project Structure](#project-structure)
 
 ---
 
 ## Product Thinking
 
-### User Analysis
+### Understanding the Users
 
-After analyzing the synthetic dataset (150 users, ~20K transactions), I identified key patterns:
+I started by analyzing the synthetic dataset (150 users, ~20K transactions) to identify real patterns before designing anything:
 
-- **Diverse spending profiles** — users range from ₹5K to ₹2L+ in total spend, with most spending concentrated in Supermarkets, Groceries, and Transport categories
-- **Recurring merchant behavior** — most users have 3-5 merchants they transact with repeatedly (Ola Cabs, PharmEasy, Paytm Mall are common), signaling habitual spending
-- **Non-trivial failure rates** — some users have significant failed transaction amounts, making this a valuable insight to surface
-- **Cashback & rewards engagement** — POPcoins and cashback are earned across transactions, and surfacing these reinforces POP's value proposition
+- **Diverse spending profiles** — users range from ₹5K to ₹2L+ in total spend. Most spending concentrates in Supermarkets, Groceries, and Transport — these aren't discretionary, they're daily essentials. The insight layer needs to help users see where their _routine_ money goes.
+- **Recurring merchant behavior** — most users have 3–5 merchants they transact with repeatedly (Ola Cabs, PharmEasy, Paytm Mall). This is habitual spending that users often don't realize adds up — surfacing it creates an "aha" moment.
+- **Cashback & rewards engagement** — POPcoins and cashback are earned across transactions. Surfacing these prominently reinforces POP's value proposition and gives users a reason to keep using POP over other UPI apps.
+- **Non-trivial failure rates** — some users have significant failed transaction amounts. Showing this builds trust (transparency) and positions POP as an app that respects the user's financial awareness.
 
 ### Chosen Insights
 
-I prioritized insights that answer the questions users actually care about:
+I prioritized insights that answer the questions users actually ask themselves:
 
-1. **Spending Summary** — "How much have I spent this month, and how does it compare to last month?" — the hero metric on the Insights page
-2. **Category Breakdown** — "Where is my money going?" — top 3 spends shown upfront with expandable VIEW ALL for all categories
-3. **Recurring Merchants** — "Who do I pay most often?" — surfaces habitual spending with average amount and transaction frequency
-4. **Rewards & Cashback** — "What am I earning back?" — POPcoins collected and total cashback shown prominently in the hero header
+| Insight | User Question | Why It Matters |
+|---------|--------------|----------------|
+| **Spending Summary** | "How much have I spent this month?" | The hero metric — instant financial awareness with month-over-month delta |
+| **Category Breakdown** | "Where is my money going?" | Top 3 shown upfront, VIEW ALL for drill-down. Helps identify largest spending buckets |
+| **Recurring Merchants** | "Who do I pay most often?" | Surfaces habitual spending with avg amount + frequency — the spending users forget about |
+| **Rewards & Cashback** | "What am I earning back?" | POPcoins + cashback shown in hero header — reinforces POP's value loop |
 
-### POP-Specific Framing
+### POP-Specific Angle
 
-- Cashback and POPcoins are given prominent placement (hero pills, coins badge) to reinforce POP's rewards value
-- The design mirrors POP's actual production app — dark theme, radial gradient cards, pill-shaped bottom nav, custom tab icons
-- The Home page replicates POP's real home screen (hero with "Tap to scan", Everything UPI grid, recharges section) to feel native to the POP ecosystem
+This isn't a generic finance dashboard — it's framed within POP's ecosystem:
+
+- **Cashback and POPcoins** get hero placement (header pills, coins badge) — not buried in a settings page
+- **The Home page mirrors POP's actual app** — "Tap to scan" hero, Everything UPI grid, recharges, bottom nav. The insights feel like a natural extension, not a bolted-on feature
+- **"Pop Insights" entry point** lives in the UPI grid alongside Pay Friends and Check Balance — positioned as a core utility, not a secondary feature
+- **Cashback promo card** at the bottom of insights reinforces the POP card acquisition funnel
 
 ---
 
@@ -40,119 +64,154 @@ I prioritized insights that answer the questions users actually care about:
 
 ### Visual Language
 
-- **Dark theme (#0D0D0D)** matching POP's production app
-- **Orange accent (#FF6B2C)** for brand elements, deltas, and active states
-- **Radial gradient cards** — subtle glass-like cards using `#2C2C2C` → `#1C1C1C` → `#0C0C0C`, matching POP's reference design
-- **0.25px borders at rgba(255,255,255,0.2)** — thin, subtle card borders from the Figma spec
-- **Pill-shaped bottom nav** (283×55px) with per-tab active/inactive SVG icons and gradient highlight
-- **Per-user gradient avatars** — 8 color pairs hashed by user ID, with avatar overlay image for consistent identity
+The design follows POP's production app aesthetic — not a generic dark theme, but POP's specific visual system:
 
-### Information Architecture
+| Element | Spec | Reference |
+|---------|------|-----------|
+| Background | `#0D0D0D` | POP's primary dark background |
+| Card surfaces | Radial gradient: `#2C2C2C` → `#1C1C1C` → `#0C0C0C` | POP's glass-like card treatment |
+| Card borders | `0.25px solid rgba(255,255,255,0.2)` | Subtle depth from the Figma reference |
+| Accent | `#FF6B2C` (orange) | POP's brand color for CTAs and active states |
+| Delta color | `#FF720C` | Month-over-month spending changes |
+| Section labels | `#747474`, 12px, uppercase, 0.48px tracking | Muted dividers between content sections |
+| Bottom nav | 283×55px pill, `#2F2F2F` → `#0E0E0E` gradient | POP's custom tab bar with per-tab SVG icons |
+| Typography | Inter / SF Pro, medium weight | Clean, legible at small sizes |
 
-- **Single scrollable Insights page** — spending card → top 3 spends → expandable categories → recurring merchants → cashback promo. No tab switching, everything flows naturally
-- **Full-page user picker** — tap the avatar to open, see large preview with gradient + name + VPA, 4-column grid of all users, auto-dismiss on selection
-- **Conditional rendering** — sections with no data are hidden entirely (no empty headings)
-- **60px section spacing, 24px heading-to-card spacing** — consistent rhythm across both platforms
+### Key Design Decisions
+
+- **Single scrollable Insights page** instead of tabbed navigation — reduces cognitive load. Users see everything in one scroll: spending → categories → recurring → promo. No tab switching needed.
+- **Expandable categories** — show top 3 upfront (covers ~75% of spending), VIEW ALL for the full list. Progressive disclosure without hiding important data.
+- **Per-user gradient avatars** — 8 color pairs hashed by user ID. Each user gets a consistent, unique identity across sessions. The avatar uses a gradient circle with an overlay character image, matching POP's actual avatar treatment.
+- **Full-page user picker** (not a dropdown) — large preview avatar with name + VPA, 4-column grid for all users. Feels native and intentional, not like a form control.
+- **60px section spacing, 24px heading-to-card** — consistent vertical rhythm matched pixel-for-pixel between iOS and web.
+- **Conditional rendering** — sections with no data are hidden entirely. No empty states, no "No data available" messages. Clean.
 
 ### iOS ↔ Web Parity
 
-Every design element is pixel-matched across platforms:
-- Same assets (hero, banners, nav icons, avatar, cashback promo, footer)
+Every design element is matched across platforms:
+
+- Same Figma-exported assets (hero, banners, nav icons, avatar overlay, cashback promo, footer)
 - Same spacings, colors, border radii, and typography
-- SF Symbols (iOS) ↔ lucide-react (web) for category icons — both stroke-style
-- `.contentTransition(.numericText())` (iOS) for VIEW ALL animation
-
----
-
-## Tech Stack
-
-| Layer | Technology | Why |
-|-------|-----------|-----|
-| Frontend | React 19 + Vite + CSS Modules | Fast HMR, component-scoped styles without build dependency |
-| Icons | lucide-react | Clean stroke icons matching SF Symbols style on iOS |
-| Backend | Express.js | Lightweight, sufficient for 6 API endpoints |
-| Database | PostgreSQL 16 | Relational data with strong aggregation queries (SUM, GROUP BY, HAVING) |
-| iOS | SwiftUI (iOS 18+) | Modern declarative UI with @Observable MVVM, matched geometry effects |
-| Hosting | Railway (backend + DB) + Vercel (frontend) | Free tiers, zero-config deploys |
-
-### Key Technical Decisions
-
-- **CSS Modules over Tailwind** — component-scoped styles without a build dependency, cleaner for a small app
-- **CSS custom properties for theming** — all colors defined as variables in `:root`, easy to maintain
-- **Server-side aggregation** — all insights (breakdown percentages, recurring detection) are computed in PostgreSQL queries rather than client-side
-- **Production API always** — web client always hits the Railway backend, no localhost detection needed
-- **Global scrollbar hiding** — `scrollbar-width: none` + `::-webkit-scrollbar { display: none }` for native mobile feel
+- SF Symbols (iOS) ↔ lucide-react (web) — both clean stroke-style icons
+- `.contentTransition(.numericText())` on iOS for animated VIEW ALL toggle
+- Matched geometry effect on iOS tab bar highlight, CSS transition on web
 
 ---
 
 ## Usage Guide
 
-### How to Use
+### Getting Started
 
-Open the [live web app](https://client-three-cyan-80.vercel.app) on your phone browser. No build process needed.
+Open [https://client-three-cyan-80.vercel.app](https://client-three-cyan-80.vercel.app) on your phone browser. The app loads immediately with real data from all 150 users.
 
 ### Home Page
-- **Hero** — "Tap to scan" with QR code visual
-- **Banner cards** — horizontally scrollable promotional banners
-- **Everything UPI** — 4 action buttons: Pay friends, To bank, Check balance, **Pop Insights** (tap to open insights)
-- **UPI ID pills** — shows the active user's VPA and UPI Lite status
-- **Recharges** — prepaid/postpaid cards
-- **Cashback carousel** — swipeable promo cards with dot indicators
-- **Footer** — "Your lifestyle Rewarded" branding
+
+| Feature | Description |
+|---------|-------------|
+| **Hero** | "Tap to scan" with QR code visual — mirrors POP's home screen |
+| **Coins badge** | Top-right — shows POPcoins balance (formatted as "519", "1.2k", etc.) |
+| **Banner cards** | Horizontally scrollable promotional banners |
+| **Everything UPI** | 4 action buttons — Pay friends, To bank, Check balance, **Pop Insights** |
+| **UPI pills** | Active user's VPA + UPI Lite status |
+| **Recharges** | Prepaid/postpaid cards with colored gradient backgrounds |
+| **Carousel** | Swipeable cashback promo cards with dot indicators |
+| **Footer** | "Your lifestyle Rewarded" branding |
 
 ### Insights Page
-- **Hero header** — purple gradient with date range, "Pop Insights" title, Collected coins + Cashback pills
-- **Spending card** — total spend this month with delta vs last month
-- **TOP 3 SPENDS** — category breakdown with stroke icons, percentages, and amounts
-- **VIEW ALL** — expands to show all spending categories
-- **RECURRING** — merchants with 3+ transactions, showing average amount and frequency
-- **Cashback promo** — promotional card at the bottom
+
+Tap "Pop Insights" from the UPI grid to open:
+
+| Section | What It Shows |
+|---------|---------------|
+| **Hero header** | Purple gradient, date range, "Pop Insights" title, Collected coins + Cashback pills |
+| **Spending card** | Total spend this month + delta vs last month (`+₹342`) |
+| **TOP 3 SPENDS** | Category breakdown with stroke icons, percentages, and amounts |
+| **VIEW ALL** | Expands to show all spending categories (collapses back to top 3) |
+| **RECURRING** | Merchants with 3+ transactions — avg amount, frequency, total |
+| **Cashback promo** | POP card acquisition promotional card |
 
 ### User Picker
-Tap the avatar (top-left on Home) to open a full-page user picker:
+
+Tap the gradient avatar (top-left on Home) to switch users:
+
 - Large preview avatar with gradient + name + VPA
-- 4-column grid of all 150 users
-- Per-user gradient colors (8 color pairs, hashed by user ID)
-- Tap a user to switch — data refreshes automatically
+- 4-column grid of all 150 users with per-user gradient colors
+- Active user highlighted with white ring + scale effect
+- Tap to select — data refreshes automatically, picker auto-dismisses
 
 ### Bottom Navigation
-Pill-shaped tab bar with Home, Shop, Card tabs + Scan button. Custom SVG icons with active/inactive states.
+
+Pill-shaped tab bar with custom SVG icons:
+- **Home** (house icon) — main landing page
+- **Shop** (bag icon) — placeholder
+- **Card** (card icon) — placeholder
+- **Scan** (prominent rounded button) — scan action
 
 ---
 
-## API Endpoints
+## Tech Stack & Decisions
 
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| GET | `/api/users` | List all 150 users |
-| GET | `/api/users/:id/summary` | Total spend, cashback, coins, failed amount, txn count |
-| GET | `/api/users/:id/breakdown` | Spending by category with percentages |
-| GET | `/api/users/:id/trends` | Monthly spend and cashback |
-| GET | `/api/users/:id/recurring` | Merchants with 3+ transactions |
-| GET | `/api/users/:id/transactions` | Paginated transaction list (query: `limit`, `offset`) |
+| Layer | Technology | Why This Choice |
+|-------|-----------|-----------------|
+| **Frontend** | React 19 + Vite + CSS Modules | Fast HMR, component-scoped styles without Tailwind build dependency |
+| **Icons** | lucide-react | Clean stroke icons matching SF Symbols style on iOS |
+| **Backend** | Express.js | Lightweight — 6 endpoints don't need a framework heavier than Express |
+| **Database** | PostgreSQL 16 | Relational data with strong aggregation (SUM, GROUP BY, HAVING for category breakdowns) |
+| **iOS** | SwiftUI (iOS 18+) | Declarative UI with `@Observable` MVVM, matched geometry effects, content transitions |
+| **Hosting** | Railway (backend + DB) + Vercel (frontend) | Free tiers, zero-config deploys, SSL included |
 
-**Backend URL:** `https://server-production-dd0d.up.railway.app`
+### Technical Decisions
+
+- **CSS Modules over Tailwind** — component-scoped styles without a build dependency. For a small app with a custom design system, utility classes add indirection without much benefit.
+- **Server-side aggregation** — category breakdowns, recurring merchant detection, and monthly trends are computed in PostgreSQL queries (`GROUP BY category`, `HAVING COUNT(*) >= 3`), not client-side. Keeps the frontend thin and fast.
+- **Production API always** — web client always hits the Railway backend directly. No localhost detection or environment switching needed.
+- **Global scrollbar hiding** — `scrollbar-width: none` + `::-webkit-scrollbar { display: none }` for a native mobile feel in the browser.
+- **Per-user gradient hashing** — `(hash << 5) - hash + charCode` hashed into 8 gradient pairs. Same user always gets the same color on both platforms.
+
+---
+
+## API Reference
+
+All endpoints return JSON. Base URL: `https://server-production-dd0d.up.railway.app`
+
+| Method | Endpoint | Description | Key Fields |
+|--------|----------|-------------|------------|
+| GET | `/api/users` | List all 150 users | `users[].id`, `name`, `vpa` |
+| GET | `/api/users/:id/summary` | Spending overview | `totalSpend`, `totalCashback`, `totalCoins`, `failedAmount`, `txnCount` |
+| GET | `/api/users/:id/breakdown` | Category spending | `categories[].name`, `amount`, `percent` |
+| GET | `/api/users/:id/trends` | Monthly trends | `months[].month`, `spend`, `cashback` |
+| GET | `/api/users/:id/recurring` | Recurring merchants (3+ txns) | `recurring[].payeeName`, `txnCount`, `avgAmount`, `totalAmount` |
+| GET | `/api/users/:id/transactions` | Paginated transactions | `transactions[]`, supports `?limit=&offset=` |
 
 ---
 
 ## Database Schema
 
-```
-users (id UUID PK, name TEXT, vpa TEXT)
+```sql
+-- Users table
+CREATE TABLE users (
+  id UUID PRIMARY KEY,
+  name TEXT NOT NULL,
+  vpa TEXT NOT NULL
+);
 
-transactions (
-  id TEXT PK,
-  user_id UUID FK → users,
-  payee_name, payer_name TEXT,
+-- Transactions table (~20K rows)
+CREATE TABLE transactions (
+  id TEXT PRIMARY KEY,
+  user_id UUID REFERENCES users(id),
+  payee_name TEXT,
+  payer_name TEXT,
   amount NUMERIC,
-  status TEXT,          -- 'success' | 'failed'
-  operation TEXT,       -- 'send' | 'receive'
-  category TEXT,        -- Groceries, Transport, Tech, etc.
+  status TEXT,            -- 'success' | 'failed'
+  operation TEXT,         -- 'send' | 'receive'
+  category TEXT,          -- Groceries, Transport, Supermarkets, Tech, etc.
   coins_earned NUMERIC,
   cashback NUMERIC,
   transacted_at TIMESTAMPTZ
-)
+);
 ```
+
+Data is seeded from the provided `transactions.xlsx` dataset using a Node.js seeder (`npm run seed`).
 
 ---
 
@@ -162,18 +221,18 @@ transactions (
 
 - Node.js 18+
 - PostgreSQL 16
-- Xcode 16+ (for iOS)
+- Xcode 16+ (for iOS app)
 
 ### Backend
 
 ```bash
 cd server
 cp .env.example .env
-# Edit .env with your DATABASE_URL (e.g., postgresql://localhost:5432/popinsights)
+# Set DATABASE_URL in .env (e.g., postgresql://localhost:5432/popinsights)
 
 npm install
-npm run seed    # Creates tables and seeds from transactions.xlsx
-npm run dev     # Starts on http://localhost:3000
+npm run seed    # Creates tables + seeds ~20K transactions from xlsx
+npm run dev     # Starts API on http://localhost:3000
 ```
 
 ### Frontend
@@ -184,19 +243,46 @@ npm install
 npm run dev     # Starts on http://localhost:5173
 ```
 
-### iOS App (SwiftUI)
+### Deployment
+
+- **Backend + DB**: Deployed on Railway (auto-deploys from GitHub)
+- **Frontend**: Deployed on Vercel (auto-deploys from GitHub)
+
+Both use free tiers with SSL included.
+
+---
+
+## iOS Native App
+
+The iOS implementation goes beyond the "one screen" requirement — it's a **full native app** with Home, Insights, and User Picker, all fetching live data from the Railway API.
+
+### Building & Running
 
 ```bash
 open ios/POPInsights/POPInsights.xcodeproj
 ```
 
-1. Open the project in Xcode 16+
+1. Open in Xcode 16+
 2. Select an iPhone simulator (iPhone 15/16, iOS 18+)
-3. Build and run (Cmd+R)
+3. Build and run (`Cmd+R`)
 
-The iOS app fetches live data from the deployed Railway backend — no local server needed.
+The app fetches live data from the deployed Railway backend — no local server needed.
 
-**Note:** The iOS app is a full implementation (not just one screen) — Home, Insights, and User Picker are all built natively in SwiftUI with live API data, custom tab bar with matched geometry effects, and Figma-imported assets.
+### What's Implemented Natively
+
+| Screen | SwiftUI Features |
+|--------|-----------------|
+| **Home** | `ScrollView`, `TabView` carousel, custom `POPTabBar` with `matchedGeometryEffect`, gradient avatars with asset overlay |
+| **Insights** | `@State` expand/collapse, `.contentTransition(.numericText())`, SF Symbol stroke icons, conditional section rendering |
+| **User Picker** | `.fullScreenCover`, `LazyVGrid` 4-column layout, animated preview transitions, `DragGesture` swipe-back |
+| **Tab Bar** | Custom `POPTabBar` with `matchedGeometryEffect` highlight animation, per-tab SVG icons, hide/show on navigation |
+
+### Native Code Quality
+
+- **MVVM architecture** — `SummaryViewModel` with `@Observable` macro, async/await API calls
+- **Live API integration** — not mock data; fetches from the same Railway backend as the web app
+- **Figma asset pipeline** — all assets exported from Figma and imported as xcassets
+- **Platform-native patterns** — `NavigationStack`, `@Environment(\.dismiss)`, `@Namespace` for animations
 
 ---
 
@@ -204,38 +290,47 @@ The iOS app fetches live data from the deployed Railway backend — no local ser
 
 ```
 kharche/
-├── server/                        # Express backend
+├── server/                           # Express.js backend
 │   ├── src/
-│   │   ├── index.js               # Entry point, CORS, routes
-│   │   ├── routes/users.js        # All 6 API endpoints
+│   │   ├── index.js                  # Entry point, CORS, routes
+│   │   ├── routes/users.js           # All 6 API endpoints
 │   │   └── db/
-│   │       ├── pool.js            # PostgreSQL connection (SSL-aware)
-│   │       ├── init.js            # Schema creation
-│   │       └── seed.js            # Excel → PostgreSQL seeder
-│   └── data/transactions.xlsx     # Source dataset
-├── client/                        # React frontend
-│   ├── public/assets/             # All iOS-synced assets (hero, nav icons, avatar, etc.)
+│   │       ├── pool.js               # PostgreSQL connection pool (SSL-aware)
+│   │       ├── init.js               # Schema creation
+│   │       └── seed.js               # Excel → PostgreSQL seeder
+│   └── data/transactions.xlsx        # Provided dataset
+│
+├── client/                           # React web frontend
+│   ├── public/assets/                # iOS-synced assets (hero, nav icons, avatar, etc.)
 │   ├── src/
-│   │   ├── api/client.js          # API client (production URL)
+│   │   ├── api/client.js             # API client (production URL)
 │   │   ├── pages/
-│   │   │   ├── Home.jsx           # Home page (hero, banners, UPI grid, carousel)
-│   │   │   ├── Insights.jsx       # Insights page (spending, categories, recurring)
-│   │   │   ├── Shop.jsx           # Placeholder
-│   │   │   └── Card.jsx           # Placeholder
+│   │   │   ├── Home.jsx              # Home (hero, banners, UPI grid, carousel, footer)
+│   │   │   ├── Home.module.css
+│   │   │   ├── Insights.jsx          # Insights (spending, categories, recurring, promo)
+│   │   │   ├── Insights.module.css
+│   │   │   ├── Shop.jsx              # Placeholder
+│   │   │   └── Card.jsx              # Placeholder
 │   │   ├── components/
-│   │   │   └── HomeNav.jsx        # Bottom navigation bar
-│   │   ├── index.css              # Theme variables + global scrollbar hiding
-│   │   └── App.jsx                # Router + user picker overlay
-│   └── vite.config.js
-├── ios/POPInsights/               # SwiftUI iOS app
+│   │   │   ├── HomeNav.jsx           # Bottom navigation bar
+│   │   │   └── HomeNav.module.css
+│   │   ├── App.jsx                   # Router + full-page user picker
+│   │   ├── App.module.css
+│   │   └── index.css                 # Theme variables + global styles
+│   └── index.html                    # Favicon, meta tags
+│
+├── ios/POPInsights/                  # SwiftUI iOS app
 │   └── POPInsights/
-│   │   ├── Models/                # UserInfo, Transaction Codables
-│   │   ├── ViewModels/            # SummaryViewModel (live API)
-│   │   ├── Views/
-│   │   │   ├── Home/HomeView.swift          # Home (hero, banners, UPI, carousel)
-│   │   │   └── Insights/InsightsView.swift  # Insights (spending, categories, recurring)
-│   │   ├── Theme/POPTheme.swift   # Colors, gradients, hex extension
-│   │   └── POPInsightsApp.swift   # MainTabView, POPTabBar, UserPickerView
-│   └── Assets.xcassets/           # All Figma-exported assets
-└── docs/                          # Assignment PDF
+│       ├── Models/                   # UserInfo, Transaction Codables
+│       ├── ViewModels/               # SummaryViewModel (@Observable, async/await)
+│       ├── Views/
+│       │   ├── Home/HomeView.swift   # Home (hero, banners, UPI, carousel)
+│       │   └── Insights/
+│       │       └── InsightsView.swift # Insights (spending, categories, recurring)
+│       ├── Theme/POPTheme.swift      # Colors, gradients, Color(hex:) extension
+│       ├── POPInsightsApp.swift      # MainTabView, POPTabBar, UserPickerView
+│       └── Assets.xcassets/          # All Figma-exported assets
+│
+└── docs/
+    └── POP_FSBuilder_Assignment.pdf  # Assignment brief
 ```
