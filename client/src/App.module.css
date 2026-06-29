@@ -1,45 +1,144 @@
-.app {
-  min-height: 100vh;
+/* Full-Page User Picker */
+
+.pickerPage {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  background: #0d0d0d;
   display: flex;
   flex-direction: column;
-  background: var(--bg-primary);
+  animation: fadeIn 0.2s ease-out;
 }
 
-.header {
-  padding: 16px 20px;
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.pickerTop {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 12px;
+  padding: 16px 20px 16px;
+  flex-shrink: 0;
 }
 
-.brand {
-  margin: 0;
-  font-size: 1.4rem;
-  font-weight: 800;
-  color: var(--accent-orange);
-  letter-spacing: -0.5px;
-  font-style: italic;
+.pickerClose {
+  background: none;
+  border: none;
+  color: #9ca3af;
+  cursor: pointer;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
 }
 
-.userPicker {
-  font-size: 0.8rem;
-  padding: 8px 12px;
-  border: 0.25px solid var(--border-card);
-  border-radius: 20px;
-  background: var(--bg-card);
-  color: var(--text-primary);
-  max-width: 160px;
-  appearance: none;
-  -webkit-appearance: none;
+.pickerTitle {
+  font-size: 16px;
+  font-weight: 600;
+  color: #e5e6e6;
 }
 
-.userPicker option {
-  background: #1A1A1A;
-  color: var(--text-primary);
+.pickerPreview {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  padding: 20px 0 32px;
 }
 
-.main {
+.previewAvatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+}
+
+.previewAvatarImg {
+  width: 44px;
+  height: 44px;
+  object-fit: contain;
+}
+
+.previewName {
+  font-size: 20px;
+  font-weight: 700;
+  color: #e5e6e6;
+}
+
+.previewVpa {
+  font-size: 13px;
+  font-weight: 500;
+  color: #6b7280;
+}
+
+.pickerDivider {
+  height: 1px;
+  background: rgba(255, 255, 255, 0.06);
+  margin: 0 20px;
+  flex-shrink: 0;
+}
+
+.pickerGrid {
   flex: 1;
-  padding-bottom: 80px;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  padding: 24px 20px 40px;
+  align-content: start;
+}
+
+.pickerUser {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+.pickerUserAvatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.pickerUserActive {
+  transform: scale(1.08);
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.6);
+}
+
+.pickerUserAvatarImg {
+  width: 26px;
+  height: 26px;
+  object-fit: contain;
+}
+
+.pickerUserName {
+  font-size: 10px;
+  font-weight: 500;
+  color: #9ca3af;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 100%;
+  transition: color 0.2s;
+}
+
+.pickerUserNameActive {
+  color: #e5e6e6;
 }

@@ -1,30 +1,44 @@
 import SwiftUI
 
 enum POPTheme {
-    static let brandPrimary = Color(hex: "4F46E5")
-    static let background = Color(hex: "F9FAFB")
-    static let cardBackground = Color.white
-    static let textPrimary = Color(hex: "1A1A2E")
-    static let textSecondary = Color(hex: "6B7280")
-    static let textMuted = Color(hex: "9CA3AF")
+    // Backgrounds
+    static let bg = Color(hex: "0D0D0D")
+    static let bgCard = Color(hex: "1C1C1C")
 
-    static let spendRed = Color(hex: "EF4444")
-    static let cashbackGreen = Color(hex: "22C55E")
-    static let coinsAmber = Color(hex: "F59E0B")
-    static let failedGray = Color(hex: "6B7280")
+    // Text
+    static let textPrimary = Color(hex: "E5E6E6")
+    static let textSecondary = Color(hex: "9CA3AF")
+    static let textMuted = Color(hex: "6B7280")
 
+    // Accent
+    static let accent = Color(hex: "FF6B2C")
+    static let accentLight = Color(hex: "FF8F5C")
+
+    // Semantic
+    static let green = Color(hex: "22C55E")
+    static let amber = Color(hex: "F59E0B")
+    static let red = Color(hex: "EF4444")
+
+    // Borders
+    static let border = Color.white.opacity(0.1)
+    static let borderLight = Color.white.opacity(0.2)
+
+    // Category colors
     static let categoryColors: [Color] = [
-        Color(hex: "4F46E5"),
-        Color(hex: "22C55E"),
-        Color(hex: "F59E0B"),
-        Color(hex: "EF4444"),
-        Color(hex: "8B5CF6"),
-        Color(hex: "EC4899"),
-        Color(hex: "14B8A6"),
-        Color(hex: "F97316"),
-        Color(hex: "06B6D4"),
-        Color(hex: "84CC16"),
+        Color(hex: "FF6B2C"), Color(hex: "22C55E"), Color(hex: "F59E0B"), Color(hex: "3B82F6"),
+        Color(hex: "8B5CF6"), Color(hex: "EC4899"), Color(hex: "14B8A6"), Color(hex: "F97316"),
+        Color(hex: "06B6D4"), Color(hex: "84CC16"),
     ]
+
+}
+
+extension View {
+    func popCard() -> some View {
+        self
+            .background(Color(hex: "1C1C1C"))
+            .clipShape(RoundedRectangle(cornerRadius: 16))
+            .overlay(RoundedRectangle(cornerRadius: 16).stroke(Color.white.opacity(0.1), lineWidth: 0.25))
+    }
 }
 
 extension Color {

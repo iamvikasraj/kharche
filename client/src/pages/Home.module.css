@@ -1,0 +1,331 @@
+.page {
+  min-height: 100vh;
+  background: var(--bg-primary);
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* Hero */
+.hero {
+  position: relative;
+  overflow: hidden;
+}
+
+.heroBg {
+  width: 100%;
+  display: block;
+}
+
+.heroTop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 16px 10px;
+  z-index: 50;
+}
+
+.userDot {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 0.4px solid #793f29;
+  cursor: pointer;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  padding: 0;
+}
+
+.avatarImg {
+  width: 18px;
+  height: 18px;
+  object-fit: contain;
+}
+
+.coinBadge {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 7px;
+  height: 27px;
+  border-radius: 16px;
+  background: #222;
+}
+
+.coinIcon {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.coinText {
+  font-size: 14px;
+  font-weight: 500;
+  color: white;
+  letter-spacing: 0.56px;
+}
+
+/* Banner Cards */
+.bannerRow {
+  display: flex;
+  gap: 10px;
+  padding: 0 12px;
+  margin-top: -40px;
+  overflow-x: auto;
+  position: relative;
+  z-index: 1;
+}
+
+.bannerRow::-webkit-scrollbar { display: none; }
+.bannerRow { scrollbar-width: none; }
+
+.bannerCard {
+  height: 86px;
+  border-radius: 16px;
+  flex-shrink: 0;
+  object-fit: cover;
+}
+
+/* Everything UPI */
+.upiSection {
+  display: flex;
+  flex-direction: column;
+  gap: 17px;
+  padding: 30px 12px 0;
+}
+
+.upiHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.upiTitle {
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--text-primary);
+  letter-spacing: -0.36px;
+}
+
+.chevron {
+  width: 4.5px;
+  height: 9px;
+}
+
+.upiGrid {
+  display: flex;
+  justify-content: space-between;
+}
+
+.upiBtn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  width: 67px;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  color: inherit;
+}
+
+.upiBtnIcon {
+  width: 67px;
+  height: 67px;
+  border-radius: 16px;
+  border: 0.25px solid rgba(255, 255, 255, 0.2);
+  background: radial-gradient(ellipse at center top, #2c2c2c 0%, #1c1c1c 50%, #0c0c0c 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.upiBtnIcon img {
+  width: 67px;
+  height: 67px;
+  object-fit: contain;
+}
+
+.upiBtnLabel {
+  font-size: 12px;
+  font-weight: 500;
+  color: #e6e7e7;
+  text-align: center;
+  white-space: pre-line;
+  line-height: 16px;
+  height: 32px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+/* UPI Pills */
+.pillRow {
+  display: flex;
+  gap: 14px;
+  padding: 24px 16px 0;
+}
+
+.pill {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 12px;
+  border-radius: 16px;
+  border: 0.25px solid rgba(255, 255, 255, 0.2);
+  background: radial-gradient(ellipse at center top, #2c2c2c 0%, #1c1c1c 50%, #0c0c0c 100%);
+  font-size: 12px;
+  font-weight: 500;
+  color: #b3b3b3;
+  line-height: 16px;
+}
+
+.pillDot {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: #b3b3b3;
+}
+
+/* Sections */
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 17px;
+  padding: 28px 12px 0;
+}
+
+.sectionHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.sectionTitle {
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--text-primary);
+  letter-spacing: -0.54px;
+}
+
+/* Recharges */
+.rechargeRow {
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+}
+
+.rechargeRow::-webkit-scrollbar { display: none; }
+.rechargeRow { scrollbar-width: none; }
+
+.rechargeCard {
+  width: 115px;
+  min-width: 115px;
+  height: 128px;
+  border-radius: 16px;
+  border: 0.25px solid rgba(255, 255, 255, 0.2);
+  background: black;
+  flex-shrink: 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.rechargeCardGreen {
+  background:
+    radial-gradient(ellipse at left center, #003427 0%, transparent 100%),
+    radial-gradient(ellipse at right center, #003427 0%, transparent 100%),
+    black;
+}
+
+.rechargeCardPurple {
+  background:
+    radial-gradient(ellipse at left center, #3b054e 0%, rgba(36,9,45,0.5) 50%, transparent 100%),
+    radial-gradient(ellipse at right center, #46035d 0%, rgba(41,8,53,0.5) 50%, transparent 100%),
+    black;
+}
+
+.rechargeLabel {
+  position: absolute;
+  bottom: 10px;
+  left: 0;
+  right: 0;
+  font-size: 12px;
+  font-weight: 500;
+  color: #bababa;
+  text-align: center;
+}
+
+/* What more? */
+.whatMore {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 0 0;
+}
+
+.whatMoreImg {
+  width: 193px;
+  height: auto;
+}
+
+/* Featured Carousel */
+.featuredSection {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  padding: 40px 13px 0;
+}
+
+.carouselTrack {
+  width: 100%;
+}
+
+.carouselSlide {
+  width: 100%;
+  border-radius: 17px;
+  display: block;
+}
+
+.carouselDots {
+  display: flex;
+  gap: 6px;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #3a3a3a;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.dotActive {
+  background: #e6e7e7;
+}
+
+/* Footer */
+.footerSection {
+  padding: 40px 13px 0;
+}
+
+.footerImg {
+  width: 100%;
+  display: block;
+}
+
+.bottomSpacer {
+  height: 100px;
+}

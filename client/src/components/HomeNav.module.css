@@ -1,0 +1,80 @@
+.bottomBar {
+  position: fixed;
+  bottom: 8px;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  padding: 0 20px;
+  z-index: 100;
+}
+
+.navPill {
+  width: 283px;
+  height: 55px;
+  border-radius: 32px;
+  background: linear-gradient(to bottom, #2f2f2f, #0e0e0e);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  display: flex;
+  align-items: center;
+  padding: 3px;
+}
+
+.navTab {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  flex: 1;
+  height: 100%;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  border-radius: 32px;
+  transition: background 0.25s ease;
+}
+
+.navTabActive {
+  background: linear-gradient(to bottom, #2e2e2e, #1b1b1b);
+}
+
+.navIcon {
+  width: 20px;
+  height: 20px;
+}
+
+.navLabelActive {
+  font-size: 14px;
+  font-weight: 500;
+  color: #e6e7e7;
+  line-height: 1;
+}
+
+.navLabel {
+  font-size: 14px;
+  font-weight: 500;
+  color: #4d4d4d;
+  line-height: 1;
+}
+
+.scanBtn {
+  width: 56px;
+  height: 56px;
+  border-radius: 32px;
+  background: linear-gradient(to bottom, #ededed, #a3a3a3);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.scanIcon {
+  width: 21.5px;
+  height: 18px;
+}

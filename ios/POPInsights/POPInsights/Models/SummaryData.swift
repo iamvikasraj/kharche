@@ -32,6 +32,25 @@ struct UserInfo: Identifiable {
     let vpa: String
 }
 
+struct MonthTrend: Identifiable {
+    let id = UUID()
+    let month: String
+    let spend: Double
+    let cashback: Double
+
+    var monthLabel: String {
+        String(month.suffix(2))
+    }
+}
+
+struct RecurringMerchant: Identifiable {
+    let id = UUID()
+    let payeeName: String
+    let txnCount: Int
+    let avgAmount: Double
+    let totalAmount: Double
+}
+
 // MARK: - API Response Codables
 
 struct UsersResponse: Codable {
@@ -75,4 +94,25 @@ struct TransactionDTO: Codable {
     let cashback: String?
     let coinsEarned: String?
     let transactedAt: String
+}
+
+struct TrendsResponse: Codable {
+    let months: [MonthDTO]
+}
+
+struct MonthDTO: Codable {
+    let month: String
+    let spend: String
+    let cashback: String
+}
+
+struct RecurringResponse: Codable {
+    let recurring: [RecurringDTO]
+}
+
+struct RecurringDTO: Codable {
+    let payeeName: String
+    let txnCount: Int
+    let avgAmount: String
+    let totalAmount: String
 }

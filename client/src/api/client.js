@@ -1,7 +1,4 @@
-const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
-const BASE_URL = isLocal
-  ? `http://${window.location.hostname}:3000`
-  : 'https://server-production-dd0d.up.railway.app';
+const BASE_URL = 'https://server-production-dd0d.up.railway.app';
 
 export async function apiGet(path) {
   const res = await fetch(`${BASE_URL}${path}`);
