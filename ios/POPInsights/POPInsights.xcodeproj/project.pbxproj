@@ -18,6 +18,7 @@
 		A10000090000000000000009 /* BreakdownView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000090000000000000009 /* BreakdownView.swift */; };
 		A1000010000000000000000A /* TrendsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000010000000000000000A /* TrendsView.swift */; };
 		A1000011000000000000000B /* RecurringView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000011000000000000000B /* RecurringView.swift */; };
+		A1000012000000000000000C /* DonutChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000012000000000000000C /* DonutChart.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +33,7 @@
 		A20000090000000000000009 /* BreakdownView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BreakdownView.swift; sourceTree = "<group>"; };
 		A2000010000000000000000A /* TrendsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrendsView.swift; sourceTree = "<group>"; };
 		A2000011000000000000000B /* RecurringView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecurringView.swift; sourceTree = "<group>"; };
+		A2000012000000000000000C /* DonutChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DonutChart.swift; sourceTree = "<group>"; };
 		A30000010000000000000001 /* POPInsights.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = POPInsights.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -116,6 +118,7 @@
 				A20000090000000000000009 /* BreakdownView.swift */,
 				A2000010000000000000000A /* TrendsView.swift */,
 				A2000011000000000000000B /* RecurringView.swift */,
+				A2000012000000000000000C /* DonutChart.swift */,
 			);
 			path = Subviews;
 			sourceTree = "<group>";
@@ -210,6 +213,7 @@
 				A10000090000000000000009 /* BreakdownView.swift in Sources */,
 				A1000010000000000000000A /* TrendsView.swift in Sources */,
 				A1000011000000000000000B /* RecurringView.swift in Sources */,
+				A1000012000000000000000C /* DonutChart.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

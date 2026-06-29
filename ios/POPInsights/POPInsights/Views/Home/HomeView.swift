@@ -3,6 +3,33 @@ import SwiftUI
 struct HomeView: View {
     let viewModel: SummaryViewModel
     @Binding var showUserPicker: Bool
+    @Binding var hideTabBar: Bool
+
+    private static let gradients: [[Color]] = [
+        [Color(hex: "FF720C"), Color(hex: "CB1400")],
+        [Color(hex: "6366F1"), Color(hex: "4338CA")],
+        [Color(hex: "22C55E"), Color(hex: "15803D")],
+        [Color(hex: "F59E0B"), Color(hex: "D97706")],
+        [Color(hex: "EC4899"), Color(hex: "BE185D")],
+        [Color(hex: "06B6D4"), Color(hex: "0E7490")],
+        [Color(hex: "8B5CF6"), Color(hex: "6D28D9")],
+        [Color(hex: "EF4444"), Color(hex: "B91C1C")],
+    ]
+
+    private var coinsFormatted: String {
+        let coins = viewModel.summary?.totalCoins ?? 0
+        if coins >= 1000 {
+            let k = Double(coins) / 1000.0
+            return k.truncatingRemainder(dividingBy: 1) == 0 ? "\(Int(k))k" : String(format: "%.1fk", k)
+        }
+        return "\(coins)"
+    }
+
+    private var avatarGradient: [Color] {
+        guard let user = viewModel.selectedUser else { return Self.gradients[0] }
+        let index = abs(user.id.hashValue) % Self.gradients.count
+        return Self.gradients[index]
+    }
 
     var body: some View {
         ZStack(alignment: .top) {
@@ -26,15 +53,18 @@ struct HomeView: View {
                     Circle()
                         .fill(
                             LinearGradient(
-                                colors: [Color(hex: "FF720C"), Color(hex: "CB1400")],
+                                colors: avatarGradient,
                                 startPoint: .top,
                                 endPoint: .bottom
                             )
                         )
                         .frame(width: 32, height: 32)
                         .overlay(
-                            Circle()
-                                .stroke(Color(hex: "793F29"), lineWidth: 0.4)
+                            Image("avatar")
+                                .resizable()
+                                .scaledToFill()
+                                .offset(y:4)
+                                .frame(width: 18, height: 18)
                         )
                 }
 
@@ -46,23 +76,17 @@ struct HomeView: View {
                         .scaledToFit()
                         .frame(width: 14, height: 14)
                         .clipShape(Circle())
+
+                    Text(coinsFormatted)
+                        .font(.system(size: 14, weight: .medium))
+                        .foregroundStyle(.white)
+                        .tracking(0.56)
                 }
-                .frame(width: 43, height: 28)
-                .background(
-                    RoundedRectangle(cornerRadius: 16)
-                        .fill(
-                            RadialGradient(
-                                colors: [Color(hex: "2C2C2C"), Color(hex: "1C1C1C"), Color(hex: "0C0C0C")],
-                                center: .top,
-                                startRadius: 0,
-                                endRadius: 30
-                            )
-                        )
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 16)
-                                .stroke(Color.white.opacity(0.2), lineWidth: 0.25)
-                        )
-                )
+                .padding(.horizontal, 7)
+                .padding(.vertical, 3)
+                .frame(height: 27)
+                .background(Color(hex: "222222"))
+                .clipShape(Capsule())
             }
             .padding(.horizontal, 16)
             .padding(.top, 65)
@@ -120,6 +144,8 @@ struct HomeView: View {
                 upiButtonContent(image: "IconBalance", label: "Check\nbalance")
                 NavigationLink {
                     InsightsView(viewModel: viewModel)
+                        .onAppear { hideTabBar = true }
+                        .onDisappear { hideTabBar = false }
                 } label: {
                     upiButtonContent(image: "IconInsights", label: "Pop\nInsights")
                 }

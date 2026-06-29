@@ -2,9 +2,9 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import styles from './HomeNav.module.css';
 
 const tabs = [
-  { path: '/', label: 'Home' },
-  { path: '/shop', label: 'Shop' },
-  { path: '/card', label: 'Card' },
+  { path: '/', label: 'Home', icon: '/assets/nav-home-inactive.svg', activeIcon: '/assets/nav-home-active.svg' },
+  { path: '/shop', label: 'Shop', icon: '/assets/nav-shop-inactive.svg', activeIcon: '/assets/nav-shop-active.svg' },
+  { path: '/card', label: 'Card', icon: '/assets/nav-card-inactive.svg', activeIcon: '/assets/nav-card-active.svg' },
 ];
 
 export default function HomeNav() {
@@ -23,7 +23,7 @@ export default function HomeNav() {
               onClick={() => navigate(tab.path)}
             >
               <img
-                src={isActive ? '/assets/nav-home.svg' : '/assets/nav-inactive.svg'}
+                src={isActive ? tab.activeIcon : tab.icon}
                 alt=""
                 className={styles.navIcon}
               />
@@ -34,7 +34,7 @@ export default function HomeNav() {
           );
         })}
       </div>
-      <button className={styles.scanBtn} onClick={() => navigate('/insights')}>
+      <button className={styles.scanBtn}>
         <img src="/assets/nav-scan.svg" alt="" className={styles.scanIcon} />
       </button>
     </div>

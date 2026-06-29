@@ -35,3 +35,13 @@ body {
 #root {
   min-height: 100vh;
 }
+
+/* Hide all scrollbars globally */
+* {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+*::-webkit-scrollbar {
+  display: none;
+}

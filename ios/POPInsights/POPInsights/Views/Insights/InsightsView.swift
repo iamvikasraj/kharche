@@ -2,118 +2,385 @@ import SwiftUI
 
 struct InsightsView: View {
     let viewModel: SummaryViewModel
-    @State private var selectedTab = 0
     @Environment(\.dismiss) private var dismiss
+    @State private var showAllCategories = false
 
-    private let tabs = ["Breakdown", "Trends", "Recurring"]
-
-    private var headerImage: some View {
-        Image("InsightsHeaderBg")
-            .resizable()
-            .aspectRatio(contentMode: .fit)
-            .frame(maxWidth: .infinity)
-            .padding(.top, 0)
+    private var dateRangeText: String {
+        guard !viewModel.trends.isEmpty else { return "All Time" }
+        let earliest = viewModel.trends.first?.month ?? ""
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM"
+        if let date = formatter.date(from: earliest) {
+            let display = DateFormatter()
+            display.dateFormat = "MMM d"
+            return "\(display.string(from: date)) - Today"
+        }
+        return "All Time"
     }
 
-    private var summaryStrip: some View {
-        VStack(spacing: 12) {
-            VStack(alignment: .leading, spacing: 4) {
-                Text("TOTAL SPEND")
-                    .font(.system(size: 11, weight: .semibold))
-                    .foregroundStyle(POPTheme.textSecondary)
-                    .tracking(0.5)
-                Text("₹\(viewModel.summary?.totalSpend.inrFormatted ?? "0")")
-                    .font(.system(size: 32, weight: .heavy))
-                    .foregroundStyle(POPTheme.textPrimary)
-                    .tracking(-1)
-            }
-            .frame(maxWidth: .infinity, alignment: .leading)
+    private var totalSpend: String {
+        viewModel.summary?.totalSpend.inrFormatted ?? "0"
+    }
 
-            HStack(spacing: 0) {
-                statItem(value: "₹\(viewModel.summary?.totalCashback.inrFormatted ?? "0")", label: "Cashback", color: POPTheme.green)
-                statDivider
-                statItem(value: "\(viewModel.summary?.totalCoins ?? 0)", label: "POPcoins", color: POPTheme.amber)
-                statDivider
-                statItem(value: "₹\(viewModel.summary?.failedAmount.inrFormatted ?? "0")", label: "Failed", color: POPTheme.red)
-            }
-            .padding(.vertical, 10)
-            .background(Color.white.opacity(0.04))
-            .clipShape(RoundedRectangle(cornerRadius: 12))
+    private static let categoryIcons: [String: String] = [
+        "Groceries": "cart",
+        "Food & Dining": "fork.knife",
+        "Travel": "airplane",
+        "Shopping": "bag",
+        "Tech": "desktopcomputer",
+        "Healthcare": "cross.case",
+        "Fashion": "tshirt",
+        "Transport": "car",
+        "Supermarkets": "building.2",
+        "Other": "square.grid.2x2",
+    ]
 
-            Text("\(viewModel.summary?.txnCount ?? 0) transactions")
-                .font(.system(size: 11))
-                .foregroundStyle(POPTheme.textMuted)
+    // MARK: - Hero Header
+
+    private var heroHeader: some View {
+        ZStack {
+            Image("InsightsHeaderBg")
+                .resizable()
+                .aspectRatio(contentMode: .fill)
+                .frame(height: 331)
+                .clipped()
+
+            Color.black.opacity(0.2)
+
+            VStack(spacing: 12) {
+                Spacer()
+                    .frame(height: 60)
+
+                Text(dateRangeText)
+                    .font(.system(size: 16, weight: .medium))
+                    .foregroundStyle(Color(hex: "F1F8FF"))
+
+                Image("InsightsTitle")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(height: 47)
+
+                HStack(spacing: 4) {
+                    HStack(spacing: 4) {
+                        Text("Collected")
+                            .font(.system(size: 12, weight: .light))
+                            .tracking(0.48)
+
+                        Image("PopCoin")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 14, height: 14)
+                            .clipShape(Circle())
+
+                        Text("\(viewModel.summary?.totalCoins ?? 0)")
+                            .font(.system(size: 14, weight: .medium))
+                            .tracking(0.56)
+                    }
+                    .foregroundStyle(.white)
+                    .padding(.horizontal, 8)
+                    .padding(.vertical, 4)
+                    .background(Color(hex: "2E0125"))
+                    .clipShape(Capsule())
+
+                    HStack(spacing: 4) {
+                        Text("Cashback")
+                            .font(.system(size: 12, weight: .light))
+                            .tracking(0.48)
+
+                        Text("₹\(viewModel.summary?.totalCashback.inrFormatted ?? "0")")
+                            .font(.system(size: 14, weight: .medium))
+                            .tracking(0.56)
+                    }
+                    .foregroundStyle(.white)
+                    .padding(.horizontal, 8)
+                    .padding(.vertical, 4)
+                    .background(Color(hex: "2E0125"))
+                    .clipShape(Capsule())
+                }
+            }
+            .padding(.bottom, 24)
+        }
+        .frame(height: 331)
+    }
+
+    // MARK: - Spending So Far Card
+
+    private var spendingCard: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            HStack {
+                Text("Spending so far")
+                    .font(.system(size: 16, weight: .medium))
+                    .foregroundStyle(Color(hex: "F1F8FF"))
+
+                Spacer()
+
+                Text("₹\(totalSpend)")
+                    .font(.system(size: 16, weight: .medium))
+                    .foregroundStyle(.white)
+                    .tracking(0.64)
+            }
+
+            HStack {
+                Text("vs last month")
+                    .font(.system(size: 12, weight: .medium))
+                    .foregroundStyle(Color(hex: "877D7D"))
+
+                Spacer()
+
+                Text("+₹342")
+                    .font(.system(size: 12, weight: .medium))
+                    .foregroundStyle(Color(hex: "FF720C"))
+            }
         }
         .padding(16)
-        .popCard()
-        .padding(.horizontal, 20)
+        .background(Color(hex: "0D0D0D"))
+        .clipShape(RoundedRectangle(cornerRadius: 8))
+        .overlay(
+            RoundedRectangle(cornerRadius: 8)
+                .stroke(Color(hex: "1C1C1C"), lineWidth: 1)
+        )
+        .padding(.horizontal, 12)
+        .padding(.top, -28)
     }
 
-    private func statItem(value: String, label: String, color: Color) -> some View {
-        VStack(spacing: 2) {
-            Text(value)
-                .font(.system(size: 14, weight: .bold))
-                .foregroundStyle(color)
-                .lineLimit(1)
-                .minimumScaleFactor(0.7)
-            Text(label.uppercased())
-                .font(.system(size: 9, weight: .medium))
-                .foregroundStyle(POPTheme.textMuted)
-                .tracking(0.3)
+    // MARK: - Section Label
+
+    private func sectionLabel(_ title: String) -> some View {
+        HStack(spacing: 7) {
+            sectionLine
+            Text(title)
+                .font(.system(size: 12, weight: .medium))
+                .foregroundStyle(Color(hex: "747474"))
+                .tracking(0.48)
+                .textCase(.uppercase)
+            sectionLine
         }
-        .frame(maxWidth: .infinity)
+        .padding(.horizontal, 24)
     }
 
-    private var statDivider: some View {
+    private var sectionLine: some View {
         Rectangle()
-            .fill(Color.white.opacity(0.1))
-            .frame(width: 1, height: 24)
+            .fill(
+                LinearGradient(
+                    colors: [Color.white.opacity(0), Color.white.opacity(0.15), Color.white.opacity(0)],
+                    startPoint: .leading,
+                    endPoint: .trailing
+                )
+            )
+            .frame(height: 0.5)
     }
 
-    private var segmentedControl: some View {
-        HStack(spacing: 4) {
-            ForEach(Array(tabs.enumerated()), id: \.offset) { index, title in
-                Button {
-                    withAnimation(.easeInOut(duration: 0.25)) { selectedTab = index }
-                } label: {
-                    Text(title)
-                        .font(.system(size: 13, weight: selectedTab == index ? .semibold : .medium))
-                        .foregroundStyle(selectedTab == index ? POPTheme.textPrimary : POPTheme.textMuted)
-                        .frame(maxWidth: .infinity)
-                        .padding(.vertical, 8)
-                        .background(
-                            selectedTab == index
-                                ? POPTheme.bgCard
-                                : Color.clear
-                        )
-                        .clipShape(RoundedRectangle(cornerRadius: 8))
+    // MARK: - Icon Box
+
+    private func iconBox(systemName: String) -> some View {
+        RoundedRectangle(cornerRadius: 12)
+            .fill(
+                RadialGradient(
+                    colors: [Color(hex: "2C2C2C"), Color(hex: "1C1C1C"), Color(hex: "0C0C0C")],
+                    center: .top,
+                    startRadius: 0,
+                    endRadius: 36
+                )
+            )
+            .frame(width: 36, height: 36)
+            .overlay(
+                Image(systemName: systemName)
+                    .font(.system(size: 14))
+                    .foregroundStyle(Color(hex: "8F97A3"))
+            )
+            .overlay(
+                RoundedRectangle(cornerRadius: 12)
+                    .stroke(Color.white.opacity(0.2), lineWidth: 0.25)
+            )
+    }
+
+    private func merchantBox(name: String) -> some View {
+        RoundedRectangle(cornerRadius: 12)
+            .fill(
+                RadialGradient(
+                    colors: [Color(hex: "2C2C2C"), Color(hex: "1C1C1C"), Color(hex: "0C0C0C")],
+                    center: .top,
+                    startRadius: 0,
+                    endRadius: 36
+                )
+            )
+            .frame(width: 36, height: 36)
+            .overlay(
+                Text(String(name.prefix(1)))
+                    .font(.system(size: 14, weight: .semibold))
+                    .foregroundStyle(Color(hex: "8F97A3"))
+            )
+            .overlay(
+                RoundedRectangle(cornerRadius: 12)
+                    .stroke(Color.white.opacity(0.2), lineWidth: 0.25)
+            )
+    }
+
+    // MARK: - Category Row
+
+    private func categoryRow(_ category: CategoryBreakdown) -> some View {
+        HStack(spacing: 15) {
+            iconBox(systemName: Self.categoryIcons[category.name] ?? "square.grid.2x2.fill")
+
+            VStack(alignment: .leading, spacing: 4) {
+                Text(category.name)
+                    .font(.system(size: 14, weight: .medium))
+                    .foregroundStyle(Color(hex: "8F97A3"))
+
+                Text(String(format: "%.2f%%", category.percent))
+                    .font(.system(size: 10, weight: .medium))
+                    .foregroundStyle(.white)
+                    .tracking(0.4)
+            }
+
+            Spacer()
+
+            Text("₹\(category.amount.inrFormatted)")
+                .font(.system(size: 14, weight: .medium))
+                .foregroundStyle(.white)
+                .tracking(0.56)
+        }
+    }
+
+    // MARK: - Top Spends
+
+    private var visibleCategories: [CategoryBreakdown] {
+        showAllCategories ? Array(viewModel.breakdown) : Array(viewModel.breakdown.prefix(3))
+    }
+
+    private var topSpendsCard: some View {
+        VStack(spacing: 0) {
+            VStack(spacing: 0) {
+                ForEach(Array(visibleCategories.enumerated()), id: \.element.name) { index, category in
+                    categoryRow(category)
+                        .padding(.vertical, 14)
+
+                    if index < visibleCategories.count - 1 {
+                        Rectangle()
+                            .fill(Color(hex: "252525"))
+                            .frame(height: 1)
+                    }
+                }
+            }
+            .padding(.horizontal, 16)
+            .animation(.easeInOut(duration: 0.3), value: showAllCategories)
+
+            Button {
+                withAnimation(.easeInOut(duration: 0.3)) {
+                    showAllCategories.toggle()
+                }
+            } label: {
+                Text(showAllCategories ? "SHOW LESS" : "VIEW ALL")
+                    .font(.system(size: 12, weight: .medium))
+                    .foregroundStyle(Color(hex: "8F97A3"))
+                    .textCase(.uppercase)
+                    .contentTransition(.numericText())
+                    .frame(maxWidth: .infinity)
+                    .frame(height: 48)
+                    .overlay(
+                        Rectangle()
+                            .fill(Color(hex: "252525"))
+                            .frame(height: 1),
+                        alignment: .top
+                    )
+            }
+            .buttonStyle(.plain)
+        }
+        .background(Color(hex: "0D0D0D"))
+        .clipShape(RoundedRectangle(cornerRadius: 16))
+        .overlay(
+            RoundedRectangle(cornerRadius: 16)
+                .stroke(Color(hex: "1C1C1C"), lineWidth: 1)
+        )
+        .padding(.horizontal, 12)
+    }
+
+    // MARK: - Recurring
+
+    private var recurringCard: some View {
+        VStack(spacing: 0) {
+            ForEach(Array(viewModel.recurring.enumerated()), id: \.element.payeeName) { index, merchant in
+                HStack(spacing: 15) {
+                    merchantBox(name: merchant.payeeName)
+
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text(merchant.payeeName)
+                            .font(.system(size: 14, weight: .medium))
+                            .foregroundStyle(Color(hex: "8F97A3"))
+
+                        Text("Avg ₹\(merchant.avgAmount.inrFormatted) per \(merchant.txnCount) transactions")
+                            .font(.system(size: 10, weight: .medium))
+                            .foregroundStyle(.white)
+                            .tracking(0.4)
+                    }
+
+                    Spacer()
+
+                    Text("₹\(merchant.totalAmount.inrFormatted)")
+                        .font(.system(size: 14, weight: .medium))
+                        .foregroundStyle(.white)
+                        .tracking(0.56)
+                }
+                .padding(.vertical, 14)
+
+                if index < viewModel.recurring.count - 1 {
+                    Rectangle()
+                        .fill(Color(hex: "2A2A2A"))
+                        .frame(height: 1)
                 }
             }
         }
-        .padding(4)
-        .background(Color.white.opacity(0.05))
-        .clipShape(RoundedRectangle(cornerRadius: 10))
-        .padding(.horizontal, 20)
+        .padding(.horizontal, 16)
+        .background(Color(hex: "0D0D0D"))
+        .clipShape(RoundedRectangle(cornerRadius: 16))
+        .overlay(
+            RoundedRectangle(cornerRadius: 16)
+                .stroke(Color(hex: "1C1C1C"), lineWidth: 1)
+        )
+        .padding(.horizontal, 12)
     }
 
-    @ViewBuilder
-    private var currentTabContent: some View {
-        switch selectedTab {
-        case 0: BreakdownView(viewModel: viewModel)
-        case 1: TrendsView(viewModel: viewModel)
-        default: RecurringView(viewModel: viewModel)
-        }
+    // MARK: - Cashback Promo
+
+    private var cashbackPromo: some View {
+        Image("cashback image")
+            .resizable()
+            .aspectRatio(contentMode: .fit)
+            .clipShape(RoundedRectangle(cornerRadius: 17))
+            .padding(.horizontal, 13)
     }
+
+    // MARK: - Body
 
     var body: some View {
         ScrollView {
             VStack(spacing: 0) {
-                headerImage
-                summaryStrip
-                    .padding(.top, -8)
-                segmentedControl
-                    .padding(.top, 16)
-                currentTabContent
+                heroHeader
+
+                if viewModel.summary != nil {
+                    spendingCard
+                }
+
+                if !viewModel.breakdown.isEmpty {
+                    sectionLabel("Top 3 Spends")
+                        .padding(.top, 60)
+                        .padding(.bottom, 24)
+
+                    topSpendsCard
+                }
+
+                if !viewModel.recurring.isEmpty {
+                    sectionLabel("Recurring")
+                        .padding(.top, 60)
+                        .padding(.bottom, 24)
+
+                    recurringCard
+                }
+
+                cashbackPromo
+                    .padding(.top, 60)
+
+                Spacer().frame(height: 60)
             }
         }
         .scrollIndicators(.hidden)
@@ -122,16 +389,24 @@ struct InsightsView: View {
                 Image(systemName: "chevron.left")
                     .font(.system(size: 16, weight: .semibold))
                     .foregroundStyle(POPTheme.textPrimary)
-                    .frame(width: 40, height: 40)
+                    .frame(width: 27, height: 27)
             }
-            .padding(.leading, 12)
-            .padding(.top, 56)
+            .padding(.leading, 16)
+            .padding(.top, 65)
         }
         .background(POPTheme.bg)
         .ignoresSafeArea(.all)
         .navigationBarBackButtonHidden()
         .toolbar(.hidden, for: .navigationBar)
         .toolbar(.hidden, for: .tabBar)
+        .gesture(
+            DragGesture()
+                .onEnded { value in
+                    if value.translation.width > 80 && abs(value.translation.height) < 100 {
+                        dismiss()
+                    }
+                }
+        )
     }
 }
 

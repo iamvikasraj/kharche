@@ -1,110 +1,328 @@
 .page {
   min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  background: var(--bg-primary);
+  background: #0a0a0a;
+  position: relative;
 }
 
-.header {
-  padding: 16px 20px;
+/* Hero Header */
+.hero {
+  position: relative;
+  height: 331px;
+  overflow: hidden;
+}
+
+.heroBg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+}
+
+.heroOverlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.heroContent {
+  position: relative;
+  z-index: 1;
   display: flex;
+  flex-direction: column;
   align-items: center;
+  padding-top: 114px;
   gap: 12px;
 }
 
+.dateRange {
+  font-size: 16px;
+  font-weight: 500;
+  color: #f1f8ff;
+}
+
+.heroTitle {
+  height: 47px;
+  width: auto;
+}
+
+.heroPills {
+  display: flex;
+  gap: 4px;
+  padding-top: 4px;
+}
+
+.heroPill {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 8px;
+  background: #2e0125;
+  border-radius: 16px;
+}
+
+.pillLabel {
+  font-size: 12px;
+  font-weight: 300;
+  color: white;
+  letter-spacing: 0.48px;
+}
+
+.pillCoin {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.pillValue {
+  font-size: 14px;
+  font-weight: 500;
+  color: white;
+  letter-spacing: 0.56px;
+}
+
 .backBtn {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  z-index: 2;
   background: none;
   border: none;
-  color: var(--text-primary);
+  color: #e5e6e6;
   cursor: pointer;
   padding: 4px;
   display: flex;
   align-items: center;
+  justify-content: center;
+  width: 27px;
+  height: 27px;
 }
 
-.title {
-  margin: 0;
-  font-size: 1.2rem;
-  font-weight: 700;
-  color: var(--text-primary);
-  letter-spacing: -0.5px;
-}
-
-.summaryStrip {
-  padding: 16px;
+.coinsBadge {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  z-index: 2;
   display: flex;
-  flex-direction: column;
-  gap: 12px;
-  background: #1C1C1C;
-  margin: 0 20px;
-  border-radius: 16px;
-  border: 0.25px solid rgba(255, 255, 255, 0.1);
-}
-
-.heroRow {
-  display: flex;
-  flex-direction: column;
+  align-items: center;
   gap: 4px;
+  padding: 3px 7px;
+  height: 27px;
+  background: #222;
+  border-radius: 16px;
 }
 
-.heroLabel {
-  font-size: 11px;
-  font-weight: 600;
-  color: var(--text-secondary);
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
+.coinsBadgeIcon {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  object-fit: cover;
 }
 
-.heroValue {
-  font-size: 32px;
-  font-weight: 800;
-  color: var(--text-primary);
-  letter-spacing: -1px;
+.coinsBadgeText {
+  font-size: 14px;
+  font-weight: 500;
+  color: white;
+  letter-spacing: 0.56px;
 }
 
-.statsRow {
-  display: flex;
-  align-items: center;
-  background: rgba(255, 255, 255, 0.04);
-  border-radius: 12px;
-  padding: 10px 0;
-}
-
-.stat {
-  flex: 1;
+/* Spending So Far Card */
+.spendingCard {
+  margin: -28px 12px 0;
+  padding: 16px;
+  background: #0d0d0d;
+  border-radius: 8px;
+  border: 1px solid #1c1c1c;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 2px;
+  gap: 8px;
+  position: relative;
+  z-index: 1;
 }
 
-.statValue {
-  font-size: 14px;
-  font-weight: 700;
+.spendingRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.spendingLabel {
+  font-size: 16px;
+  font-weight: 500;
+  color: #f1f8ff;
+}
+
+.spendingValue {
+  font-size: 16px;
+  font-weight: 500;
+  color: white;
+  letter-spacing: 0.64px;
+}
+
+.spendingSub {
+  font-size: 12px;
+  font-weight: 500;
+  color: #877d7d;
+}
+
+.spendingDelta {
+  font-size: 12px;
+  font-weight: 500;
+  color: #ff720c;
+}
+
+/* Section Label */
+.sectionLabel {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 60px 24px 24px;
+}
+
+.sectionLine {
+  flex: 1;
+  height: 0.5px;
+  background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.15), transparent);
+}
+
+.sectionLabelText {
+  font-size: 12px;
+  font-weight: 500;
+  color: #747474;
+  letter-spacing: 0.48px;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+/* Spends Card */
+.spendsCard {
+  margin: 0 12px;
+  background: #0d0d0d;
+  border-radius: 16px;
+  border: 1px solid #1c1c1c;
+  overflow: hidden;
+}
+
+.spendsRows {
+  padding: 0 16px;
+}
+
+.spendRow {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 14px 0;
+}
+
+.iconBox {
+  width: 36px;
+  height: 36px;
+  border-radius: 12px;
+  background: radial-gradient(ellipse at center top, #2c2c2c 0%, #1c1c1c 50%, #0c0c0c 100%);
+  border: 0.25px solid rgba(255, 255, 255, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.iconEmoji {
+  font-size: 16px;
   line-height: 1;
 }
 
-.statLabel {
-  font-size: 9px;
-  font-weight: 500;
-  color: var(--text-muted);
-  text-transform: uppercase;
-  letter-spacing: 0.3px;
+.merchantInitial {
+  font-size: 14px;
+  font-weight: 600;
+  color: #8f97a3;
 }
 
-.statDivider {
-  width: 1px;
-  height: 24px;
-  background: rgba(255, 255, 255, 0.1);
-}
-
-.txnCount {
-  font-size: 11px;
-  color: var(--text-muted);
-  text-align: center;
-}
-
-.main {
+.spendInfo {
   flex: 1;
-  padding-bottom: 80px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.spendName {
+  font-size: 14px;
+  font-weight: 500;
+  color: #8f97a3;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.spendPercent {
+  font-size: 10px;
+  font-weight: 500;
+  color: white;
+  letter-spacing: 0.4px;
+}
+
+.spendAmount {
+  font-size: 14px;
+  font-weight: 500;
+  color: white;
+  letter-spacing: 0.56px;
+  flex-shrink: 0;
+}
+
+.divider {
+  height: 1px;
+  background: #252525;
+}
+
+.dividerLight {
+  height: 1px;
+  background: #2a2a2a;
+}
+
+.viewAllBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 48px;
+  background: none;
+  border: none;
+  border-top: 1px solid #252525;
+  font-size: 12px;
+  font-weight: 500;
+  color: #8f97a3;
+  letter-spacing: 0.48px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.viewAllBtn:active {
+  color: #b0b8c4;
+}
+
+/* Recurring Card */
+.recurringCard {
+  margin: 0 12px;
+  padding: 0 16px;
+  background: #0d0d0d;
+  border-radius: 16px;
+  border: 1px solid #1c1c1c;
+}
+
+/* Cashback Promo */
+.promoCard {
+  padding: 60px 13px 0;
+}
+
+.promoImg {
+  width: 100%;
+  border-radius: 17px;
+  display: block;
+}
+
+.bottomSpacer {
+  height: 60px;
 }

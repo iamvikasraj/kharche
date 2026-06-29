@@ -8,20 +8,12 @@
 /* Hero */
 .hero {
   position: relative;
-  height: 481px;
-  background: linear-gradient(to bottom, #232323, #0d0d0d 83.37%);
   overflow: hidden;
 }
 
 .heroBg {
-  position: absolute;
-  top: 0;
-  left: 0;
   width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: top center;
-  pointer-events: none;
+  display: block;
 }
 
 .heroTop {
@@ -32,63 +24,73 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 65px 16px 10px;
+  padding: 16px 16px 10px;
   z-index: 50;
 }
 
 .userDot {
   width: 32px;
   height: 32px;
-  border-radius: 52px;
-  background: linear-gradient(to bottom, #ff720c, #cb1400);
+  border-radius: 50%;
   border: 0.4px solid #793f29;
   cursor: pointer;
   flex-shrink: 0;
-}
-
-.coinBadge {
-  width: 43px;
-  height: 28px;
-  border-radius: 16px;
-  border: 0.25px solid rgba(255, 255, 255, 0.2);
-  background: radial-gradient(ellipse at center top, rgba(44,44,44,1) 0%, rgba(28,28,28,1) 50%, rgba(12,12,12,1) 100%);
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
+  padding: 0;
+}
+
+.avatarImg {
+  width: 18px;
+  height: 18px;
+  object-fit: contain;
+}
+
+.coinBadge {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 7px;
+  height: 27px;
+  border-radius: 16px;
+  background: #222;
 }
 
 .coinIcon {
   width: 14px;
   height: 14px;
-  border-radius: 24px;
+  border-radius: 50%;
   object-fit: cover;
 }
 
-/* Stat Cards */
-.statsRow {
+.coinText {
+  font-size: 14px;
+  font-weight: 500;
+  color: white;
+  letter-spacing: 0.56px;
+}
+
+/* Banner Cards */
+.bannerRow {
   display: flex;
   gap: 10px;
   padding: 0 12px;
-  margin-top: -61px;
+  margin-top: -40px;
   overflow-x: auto;
-  scrollbar-width: none;
-  -ms-overflow-style: none;
   position: relative;
   z-index: 1;
 }
 
-.statsRow::-webkit-scrollbar {
-  display: none;
-}
+.bannerRow::-webkit-scrollbar { display: none; }
+.bannerRow { scrollbar-width: none; }
 
 .bannerCard {
-  min-width: 324px;
   height: 86px;
   border-radius: 16px;
-  border: 0.25px solid rgba(255, 255, 255, 0.2);
-  background: radial-gradient(ellipse at center top, rgba(44,44,44,1) 0%, rgba(28,28,28,1) 50%, rgba(12,12,12,1) 100%);
   flex-shrink: 0;
+  object-fit: cover;
 }
 
 /* Everything UPI */
@@ -108,7 +110,7 @@
 .upiTitle {
   font-size: 18px;
   font-weight: 500;
-  color: #e5e6e6;
+  color: var(--text-primary);
   letter-spacing: -0.36px;
 }
 
@@ -140,7 +142,7 @@
   height: 67px;
   border-radius: 16px;
   border: 0.25px solid rgba(255, 255, 255, 0.2);
-  background: radial-gradient(ellipse at center top, rgba(44,44,44,1) 0%, rgba(28,28,28,1) 50%, rgba(12,12,12,1) 100%);
+  background: radial-gradient(ellipse at center top, #2c2c2c 0%, #1c1c1c 50%, #0c0c0c 100%);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -148,13 +150,9 @@
 }
 
 .upiBtnIcon img {
-  width: 22px;
-  height: 22px;
-}
-
-.bankIcon {
-  width: 19px !important;
-  height: 19.5px !important;
+  width: 67px;
+  height: 67px;
+  object-fit: contain;
 }
 
 .upiBtnLabel {
@@ -178,21 +176,31 @@
 }
 
 .pill {
+  display: flex;
+  align-items: center;
+  gap: 4px;
   padding: 4px 12px;
   border-radius: 16px;
   border: 0.25px solid rgba(255, 255, 255, 0.2);
-  background: radial-gradient(ellipse at center top, rgba(44,44,44,1) 0%, rgba(28,28,28,1) 50%, rgba(12,12,12,1) 100%);
+  background: radial-gradient(ellipse at center top, #2c2c2c 0%, #1c1c1c 50%, #0c0c0c 100%);
   font-size: 12px;
   font-weight: 500;
   color: #b3b3b3;
   line-height: 16px;
 }
 
+.pillDot {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: #b3b3b3;
+}
+
 /* Sections */
 .section {
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 17px;
   padding: 28px 12px 0;
 }
 
@@ -205,8 +213,8 @@
 .sectionTitle {
   font-size: 18px;
   font-weight: 500;
-  color: #e5e6e6;
-  letter-spacing: -0.36px;
+  color: var(--text-primary);
+  letter-spacing: -0.54px;
 }
 
 /* Recharges */
@@ -214,13 +222,10 @@
   display: flex;
   gap: 12px;
   overflow-x: auto;
-  scrollbar-width: none;
-  -ms-overflow-style: none;
 }
 
-.rechargeRow::-webkit-scrollbar {
-  display: none;
-}
+.rechargeRow::-webkit-scrollbar { display: none; }
+.rechargeRow { scrollbar-width: none; }
 
 .rechargeCard {
   width: 115px;
@@ -236,15 +241,15 @@
 
 .rechargeCardGreen {
   background:
-    radial-gradient(ellipse at left center, rgba(0,52,39,1) 0%, rgba(12,12,12,0) 100%),
-    radial-gradient(ellipse at right center, rgba(0,52,39,1) 0%, rgba(12,12,12,0) 100%),
+    radial-gradient(ellipse at left center, #003427 0%, transparent 100%),
+    radial-gradient(ellipse at right center, #003427 0%, transparent 100%),
     black;
 }
 
 .rechargeCardPurple {
   background:
-    radial-gradient(ellipse at left center, rgba(59,5,78,1) 0%, rgba(36,9,45,0.5) 50%, rgba(12,12,12,0) 100%),
-    radial-gradient(ellipse at right center, rgba(70,3,93,1) 0%, rgba(41,8,53,0.5) 50%, rgba(12,12,12,0) 100%),
+    radial-gradient(ellipse at left center, #3b054e 0%, rgba(36,9,45,0.5) 50%, transparent 100%),
+    radial-gradient(ellipse at right center, #46035d 0%, rgba(41,8,53,0.5) 50%, transparent 100%),
     black;
 }
 
@@ -256,7 +261,6 @@
   font-size: 12px;
   font-weight: 500;
   color: #bababa;
-  line-height: 16px;
   text-align: center;
 }
 
@@ -273,7 +277,7 @@
   height: auto;
 }
 
-/* Featured Card */
+/* Featured Carousel */
 .featuredSection {
   display: flex;
   flex-direction: column;
@@ -282,26 +286,46 @@
   padding: 40px 13px 0;
 }
 
-.featuredCard {
+.carouselTrack {
   width: 100%;
-  height: 360px;
-  border-radius: 16px;
-  border: 0.25px solid rgba(255, 255, 255, 0.2);
-  background: black;
+}
+
+.carouselSlide {
+  width: 100%;
+  border-radius: 17px;
+  display: block;
 }
 
 .carouselDots {
-  height: 8px;
-  width: 88px;
+  display: flex;
+  gap: 6px;
 }
 
-.carouselDotsImg {
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #3a3a3a;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.dotActive {
+  background: #e6e7e7;
+}
+
+/* Footer */
+.footerSection {
+  padding: 40px 13px 0;
+}
+
+.footerImg {
   width: 100%;
-  height: 100%;
-  object-fit: contain;
+  display: block;
 }
 
 .bottomSpacer {
   height: 100px;
 }
-
