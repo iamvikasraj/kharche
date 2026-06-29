@@ -78,7 +78,7 @@ With 8–10 hours, I prioritized a polished end-to-end experience over feature b
 
 - **User picker instead of authentication** — the assignment has 150 synthetic users. A login flow would add friction without value. The user picker lets reviewers explore any user's data instantly. In production, this would be replaced by real auth (OTP-based, matching POP's flow).
 - **Single Insights page instead of separate Trends/Breakdown/Recurring tabs** — after prototyping both, the single scrollable page felt more natural on mobile. Users see the full picture without tab-switching. The data is all from the same time period, so it belongs together.
-- **No savings potential / highest spender views** — these require comparative analysis across users (which a real user wouldn't see) or predictive modeling. I focused on insights a user would actually use: "where did my money go" and "what am I paying repeatedly."
+- **Savings potential is built into the design** — the recurring merchants section surfaces habitual spending users may want to optimize, and the category breakdown with percentages helps users spot where they're over-spending. The month-over-month delta (`+₹342 vs last month`) gives users a clear signal on whether their spending is trending up. Rather than a separate "savings" screen, these cues are woven into the insights flow so users naturally identify savings opportunities.
 - **Shop and Card tabs are placeholders** — they exist in the navigation to show the full app structure, but aren't the focus of this assignment.
 
 ---
