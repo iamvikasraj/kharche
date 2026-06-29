@@ -6,6 +6,7 @@
 |---|---|
 | **Live Web App** | [https://client-three-cyan-80.vercel.app](https://client-three-cyan-80.vercel.app) |
 | **Design File** | [Figma](https://www.figma.com/design/sjRkyjz7u5fB6NByTHohwK/Design?node-id=3-17) |
+| **Demo Videos** | [Google Drive](https://drive.google.com/drive/u/0/folders/1sWUbLG4qroD1Pguyd3yWHduIHxdCXeCl) |
 | **API Server** | [https://server-production-dd0d.up.railway.app](https://server-production-dd0d.up.railway.app) |
 | **GitHub** | [https://github.com/iamvikasraj/kharche](https://github.com/iamvikasraj/kharche) |
 
@@ -19,6 +20,7 @@ Open the web app on your phone browser — it's live and immediately testable, n
 |-------------|--------|----------------|
 | **Live Web App** | ✅ Deployed | [client-three-cyan-80.vercel.app](https://client-three-cyan-80.vercel.app) — open on phone, no build needed |
 | **Native App (iOS)** | ✅ Full SwiftUI app | `ios/POPInsights/` — open in Xcode 16+, build & run (Cmd+R). Fetches live API data |
+| **Demo Videos** | ✅ | [Google Drive](https://drive.google.com/drive/u/0/folders/1sWUbLG4qroD1Pguyd3yWHduIHxdCXeCl) — live recordings of web + iOS |
 | **Design Files** | ✅ Figma | [Design File](https://www.figma.com/design/sjRkyjz7u5fB6NByTHohwK/Design?node-id=3-17) — all screens, components, specs, and annotations |
 | **Codebase** | ✅ Public repo | [github.com/iamvikasraj/kharche](https://github.com/iamvikasraj/kharche) — web + backend + iOS |
 | **Documentation** | ✅ This README | Product thinking, design rationale, tech decisions, usage guide, API reference |
