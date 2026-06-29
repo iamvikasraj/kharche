@@ -13,6 +13,18 @@ Open the web app on your phone browser — it's live and immediately testable, n
 
 ---
 
+## Deliverables
+
+| Deliverable | Status | Link / Details |
+|-------------|--------|----------------|
+| **Live Web App** | ✅ Deployed | [client-three-cyan-80.vercel.app](https://client-three-cyan-80.vercel.app) — open on phone, no build needed |
+| **Native App (iOS)** | ✅ Full SwiftUI app | `ios/POPInsights/` — open in Xcode 16+, build & run (Cmd+R). Fetches live API data |
+| **Design Files** | ✅ Figma | [Design File](https://www.figma.com/design/sjRkyjz7u5fB6NByTHohwK/Design?node-id=3-17) — all screens, components, specs, and annotations |
+| **Codebase** | ✅ Public repo | [github.com/iamvikasraj/kharche](https://github.com/iamvikasraj/kharche) — web + backend + iOS |
+| **Documentation** | ✅ This README | Product thinking, design rationale, tech decisions, usage guide, API reference |
+
+---
+
 ## Table of Contents
 
 - [Product Thinking](#product-thinking)
@@ -57,6 +69,15 @@ This isn't a generic finance dashboard — it's framed within POP's ecosystem:
 - **The Home page mirrors POP's actual app** — "Tap to scan" hero, Everything UPI grid, recharges, bottom nav. The insights feel like a natural extension, not a bolted-on feature
 - **"Pop Insights" entry point** lives in the UPI grid alongside Pay Friends and Check Balance — positioned as a core utility, not a secondary feature
 - **Cashback promo card** at the bottom of insights reinforces the POP card acquisition funnel
+
+### Scoping Decisions
+
+With 8–10 hours, I prioritized a polished end-to-end experience over feature breadth:
+
+- **User picker instead of authentication** — the assignment has 150 synthetic users. A login flow would add friction without value. The user picker lets reviewers explore any user's data instantly. In production, this would be replaced by real auth (OTP-based, matching POP's flow).
+- **Single Insights page instead of separate Trends/Breakdown/Recurring tabs** — after prototyping both, the single scrollable page felt more natural on mobile. Users see the full picture without tab-switching. The data is all from the same time period, so it belongs together.
+- **No savings potential / highest spender views** — these require comparative analysis across users (which a real user wouldn't see) or predictive modeling. I focused on insights a user would actually use: "where did my money go" and "what am I paying repeatedly."
+- **Shop and Card tabs are placeholders** — they exist in the navigation to show the full app structure, but aren't the focus of this assignment.
 
 ---
 
